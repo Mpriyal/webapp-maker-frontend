@@ -6,7 +6,7 @@ const AddNewEntity = () => {
             <div className="row card-body justify-content-center">
                 <button type="button" className="btn btn-lg"><i class="fa fa-plus fa-5x"></i></button>
             </div>
-            <h2 className="text-center mb-5">Add new entity</h2>
+            <h2 className="text-center mb-5">Add New Entity</h2>
         </div>
     )
 }

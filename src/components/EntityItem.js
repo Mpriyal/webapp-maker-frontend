@@ -11,7 +11,7 @@ const EntityItem = (props) => {
                 </span>
                 <hr />
                 {props.relation.attributes.map((v, index) => (
-                    <li className="list-group-item" key = {index}>{v.name} : {v.type}</li>
+                    <p key = {index}>{v.name} : {v.type}</p>
                 ))}
             </div>
         </div>

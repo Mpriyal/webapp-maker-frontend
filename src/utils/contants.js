@@ -1,3 +1,7 @@
+/**
+ * This is the sample canonical form.
+ */
+
 const canonical = {
     project_id: 123,
     relations: [{
