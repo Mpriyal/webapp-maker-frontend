@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import EntityEditAttributes from './EntityEditAttributes';
 import EntityEditProperties from './EntityEditProperties';
 import EntityEditBasic from './EntityEditBasic';
-
+import { Link } from 'react-router-dom';
 export default class EditEntity extends Component {
     constructor(props) {
         super(props);
@@ -35,31 +35,42 @@ export default class EditEntity extends Component {
                 <div className=" mt-5 card">
                     <ul className="nav nav-tabs" id="myTab" role="tablist">
                         <li className="nav-item">
-                            <a className="nav-link active" 
-                            data-toggle="tab" 
-                            href="#home" 
-                            role="tab" 
-                            onClick={() => this.setState({ role: 'basic' })}>Basic</a>
+                            <a className="nav-link active"
+                                data-toggle="tab"
+                                href="#home"
+                                role="tab"
+                                onClick={() => this.setState({ role: 'basic' })}>Basic</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" 
-                            data-toggle="tab" 
-                            href="#profile" 
-                            role="tab" 
-                            onClick={() => this.setState({ role: 'attributes' })}>Attributes</a>
+                            <a className="nav-link"
+                                data-toggle="tab"
+                                href="#profile"
+                                role="tab"
+                                onClick={() => this.setState({ role: 'attributes' })}>Attributes</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" 
-                            data-toggle="tab" 
-                            href="#contact" 
-                            role="tab" 
-                            onClick={() => this.setState({ role: 'properties' })}>Properties</a>
+                            <a className="nav-link"
+                                data-toggle="tab"
+                                href="#contact"
+                                role="tab"
+                                onClick={() => this.setState({ role: 'properties' })}>Properties</a>
                         </li>
                     </ul>
                     {this.state.role === 'basic' && <EntityEditBasic />}
                     {this.state.role === 'attributes' && <EntityEditAttributes />}
                     {this.state.role === 'properties' && <EntityEditProperties />}
-                    <button type="button" className="btn btn-outline-success">Save</button>
+                    <div className='row'>
+                        <div className='col-6'>
+                            <Link to='/entities'>
+                                <button type="button" className="btn btn-block btn-outline-secondary">
+                                    Cancel
+                                </button>
+                            </Link>
+                        </div>
+                        <div className='col-6'>
+                            <button type="button" className="btn btn-block btn-outline-success">Save</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
