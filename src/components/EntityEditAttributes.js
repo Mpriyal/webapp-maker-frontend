@@ -1,37 +1,45 @@
 import React from 'react'
-
-const EnitityEditAttributes = () => {
+const Head = () => {
+    return (
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Type</th>
+            <th scope="col">Validations</th>
+            <th scope="col">Edit/Delete</th>
+        </tr>
+    </thead>)
+}
+const EnitityEditAttributes = (props) => {
     return (
         <div className='container my-5'>
             <button type="button" className="btn btn-outline-primary">Add New Attribute</button>
             <table className="table table-striped mt-5">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                    </tr>
-                </thead>
+                <Head />
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
+                    {props.attributes.map((v, index) => (
+                        <tr key={index}>
+                            <th scope="row">{index + 1}</th>
+                            <td>{v.name}</td>
+                            <td>{v.type}</td>
+                            <td>
+                                {v.validations.map((validation, i) => (
+                                    <p key={i}>{validation.name}</p>
+                                ))}
+                            </td>
+                            <td>
+                                <div className="row">
+                                    <div className='col-6'>
+                                        <i class="fa fa-edit" />
+                                    </div>
+                                    <div className='col-6'>
+                                        <i class="fa fa-trash" />
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>

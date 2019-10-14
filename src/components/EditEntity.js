@@ -14,6 +14,7 @@ export default class EditEntity extends Component {
                     name: 'Id',
                     type: 'NUMBER',
                     validations: [{
+                        name: 'required',
                         required: true,
                         min_length: 2,
                         max_length: 100
@@ -22,6 +23,7 @@ export default class EditEntity extends Component {
                     name: 'Name',
                     type: 'VARCHAR',
                     validations: [{
+                        name: 'not required',
                         required: false
                     }]
                 }]
@@ -57,7 +59,7 @@ export default class EditEntity extends Component {
                         </li>
                     </ul>
                     {this.state.role === 'basic' && <EntityEditBasic />}
-                    {this.state.role === 'attributes' && <EntityEditAttributes />}
+                    {this.state.role === 'attributes' && <EntityEditAttributes attributes={this.state.entity.attributes}/>}
                     {this.state.role === 'properties' && <EntityEditProperties />}
                     <div className='row'>
                         <div className='col-6'>
