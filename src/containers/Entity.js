@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import EntityItem from '../components/EntityItem'
-import canonical from '../utils/contants';
-import AddNewEntity from '../components/AddNewEntity';
+import canonical from '../utils/contants'
+import AddNewEntity from '../components/AddNewEntity'
+import {Link} from 'react-router-dom'
+
 export default class Entity extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,9 @@ export default class Entity extends Component {
           {this.state.canonical.relations.map((relation, index) => (
             <EntityItem relation={relation} key={index} />
           ))}
-          <AddNewEntity />
+            <Link to='/new' className= 'col-3 my-3'>
+                    <AddNewEntity />
+            </Link>
         </div>
       </div>
     )

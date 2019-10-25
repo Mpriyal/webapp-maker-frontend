@@ -7,7 +7,8 @@ const RouterComponent = () =>{
     return (
         <Router>
             <Route path="/entities"><Entity/></Route>
-            <Route path="/edit"><EditEntity /></Route>
+            <Route path="/edit"><EditEntity/></Route>
+            <Route path='/new'><EditEntity/></Route>
         </Router>
     )
 };
