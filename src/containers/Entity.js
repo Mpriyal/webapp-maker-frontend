@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import EntityItem from '../components/EntityItem'
 import canonical from '../utils/contants'
 import AddNewEntity from '../components/AddNewEntity'
-import {Link} from 'react-router-dom'
+import {BrowserRouter as Router, Link} from 'react-router-dom'
 
 export default class Entity extends Component {
   constructor(props) {
