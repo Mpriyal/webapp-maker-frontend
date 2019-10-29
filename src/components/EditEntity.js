@@ -9,6 +9,7 @@ export default class EditEntity extends Component {
         this.state = {
             role: 'basic',
             entity: {
+                id: 1,
                 name: 'Movies',
                 attributes: [{
                     id: 123,
@@ -76,11 +77,11 @@ export default class EditEntity extends Component {
                         </li>
                     </ul>
                     {this.state.role === 'basic' && <EntityEditBasic entity={this.state.entity}/>}
-                    {this.state.role === 'attributes' && <EntityEditAttributes addNewAttribute={this.addNewAttribute} attributes={this.state.entity.attributes}/>}
+                    {this.state.role === 'attributes' && <EntityEditAttributes entityId={this.state.entity.id} addNewAttribute={this.addNewAttribute} attributes={this.state.entity.attributes}/>}
                     {this.state.role === 'properties' && <EntityEditProperties/>}
                     <div className='row'>
                         <div className='col-6'>
-                            <Link to='/entities'>
+                            <Link to='/entity'>
                                 <button type="button" className="btn btn-block btn-outline-secondary">
                                     Cancel
                                 </button>

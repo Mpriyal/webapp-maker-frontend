@@ -5,6 +5,7 @@
 const canonical = {
     project_id: 123,
     relations: [{
+        id: 1,
         name: 'Movies',
         attributes: [{
             name: 'Id',
@@ -22,6 +23,7 @@ const canonical = {
             }]
         }]
     },{
+        id: 2,
         name: 'Actors',
         attributes: [{
             name: 'Id',
@@ -41,6 +43,7 @@ const canonical = {
         ]
         }]
     },{
+        id: 3,
         name: 'Library',
         attributes: [{
             name: 'Id',
@@ -58,6 +61,7 @@ const canonical = {
             }]
         }]
     },{
+        id: 4,
         name: 'Books',
         attributes: [{
             name: 'Id',

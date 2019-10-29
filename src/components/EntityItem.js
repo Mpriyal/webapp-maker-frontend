@@ -15,7 +15,7 @@ const EntityItem = (props) => {
             <div className="card-body">
                 <span className = {'row'}>
                     <h2 className="card-title my-3 col-4">{props.relation.name}</h2>
-                    <Link to='/edit' className= 'col-3 my-3'>
+                    <Link to={`/entity/${props.relation.id}/edit`} className= 'col-3 my-3'>
                         <button type="button" className="btn btn-block btn-outline-primary">Edit</button>
                     </Link>
                     <button type="button"

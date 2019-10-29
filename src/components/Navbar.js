@@ -13,7 +13,7 @@ const Navbar = () => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div className="navbar-nav">
-                    <Link className="nav-item nav-link" to="/entities">
+                    <Link className="nav-item nav-link" to="/entity">
                             Entities
                     </Link>
                 </div>

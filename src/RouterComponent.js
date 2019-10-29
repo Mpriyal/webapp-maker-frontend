@@ -10,11 +10,10 @@ const RouterComponent = () =>{
     return (
         <Router>
             <Route path='/' component={Home}/>
-            <Route path='/entities' component={Entity}/>
-            <Route path='/edit' component={EditEntity}/>
-            <Route path='/new' component={EditEntity}/>
+            <Route exact path='/entity' component={Entity}/>
+            <Route exact path='/entity/:editId/edit' component={EditEntity}/>
+            <Route exact path='/entity/:editId/field/:id/edit' component={AttributeEdit}/>
             <Route path='/login' component={Login}/>
-            <Route path='/attributeedit' component={AttributeEdit}/>
         </Router>
     )
 };
