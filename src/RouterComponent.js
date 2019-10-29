@@ -4,6 +4,7 @@ import Entity from './containers/Entity'
 import EditEntity from './components/EditEntity'
 import Login from './components/Login'
 import Home from "./containers/Home";
+import AttributeEdit from "./components/AttributeEdit";
 
 const RouterComponent = () =>{
     return (
@@ -13,6 +14,7 @@ const RouterComponent = () =>{
             <Route path='/edit' component={EditEntity}/>
             <Route path='/new' component={EditEntity}/>
             <Route path='/login' component={Login}/>
+            <Route path='/attributeedit' component={AttributeEdit}/>
         </Router>
     )
 };

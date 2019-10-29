@@ -18,9 +18,9 @@ const EntityItem = (props) => {
                     <Link to='/edit' className= 'col-3 my-3'>
                         <button type="button" className="btn btn-block btn-outline-primary">Edit</button>
                     </Link>
-                    <button type="button" 
-                            className="btn btn-block btn-outline-danger col-3 my-3" 
-                            data-toggle="modal" 
+                    <button type="button"
+                            className="btn btn-block btn-outline-danger col-3 my-3"
+                            data-toggle="modal"
                             data-target="#exampleModal">Delete</button>
                     <ConfirmDeleteModal onDeleteClick={onDeleteClick} element={props}/>
                 </span>

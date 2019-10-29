@@ -1,4 +1,7 @@
 import React from 'react'
+import AttributeEdit from "./AttributeEdit";
+import {Link} from "react-router-dom";
+
 const Head = () => {
     return (
     <thead>
@@ -10,15 +13,41 @@ const Head = () => {
             <th scope="col">Edit/Delete</th>
         </tr>
     </thead>)
-}
-const EnitityEditAttributes = (props) => {
-    return (
-        <div className='container my-5'>
-            <button type="button" className="btn btn-outline-primary">Add New Attribute</button>
-            <table className="table table-striped mt-5">
-                <Head />
-                <tbody>
-                    {props.attributes.map((v, index) => (
+};
+
+class EnitityEditAttributes extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            editing : false,
+            entity: {}
+        }
+    }
+    handler = () => {
+        this.props.addNewAttribute()
+    };
+    handleNameChange = (e) => {
+        let newEntity = this.state.entity;
+        newEntity.name = e.target.value;
+        this.setState({
+            entity : newEntity
+        });
+    };
+    handleTypeChange = (e) => {
+        // console.log('handle change called', e)
+    };
+    handleValidationChange = (e) => {
+        // console.log('handle change called', e)
+    };
+    render() {
+        return (
+            <div className='container my-5'>
+                {this.state.editing && <AttributeEdit/>}
+                <button type="button" className="btn btn-outline-primary" onClick={this.handler}>Add New Attribute</button>
+                <table className="table table-striped mt-5">
+                    <Head/>
+                    <tbody>
+                    {this.props.attributes.map((v, index) => (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
                             <td>{v.name}</td>
@@ -31,19 +60,24 @@ const EnitityEditAttributes = (props) => {
                             <td>
                                 <div className="row">
                                     <div className='col-6'>
-                                        <i class="fa fa-edit" />
+                                        <Link to='/attributeedit'>
+                                            <i className="fa fa-edit"
+                                               onClick={() => this.setState({editing : !this.state.editing, entity: v})}/>
+                                        </Link>
+
                                     </div>
                                     <div className='col-6'>
-                                        <i class="fa fa-trash" />
+                                        <i className="fa fa-trash"/>
                                     </div>
                                 </div>
                             </td>
                         </tr>
                     ))}
-                </tbody>
-            </table>
-        </div>
-    )
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
 };
 
 export default EnitityEditAttributes;
