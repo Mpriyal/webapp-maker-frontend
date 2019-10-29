@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from "react-router-dom";
 
 class AttributeEdit extends Component {
     constructor(props) {
@@ -6,15 +7,15 @@ class AttributeEdit extends Component {
         this.state = {
             dataTypeInitial: 'Text',
             dataTypes: ['Text', 'Integer', 'Decimal', 'Date',
-                'DateTime', 'Boolean', 'Enumeration', 'Relation( One)', 'Relation (Many)']
+                'DateTime', 'Boolean', 'Enumeration', 'Relation (One)', 'Relation (Many)'],
+            DummyEntities: ['Movies', 'Actors', 'Library', 'Books'],
+            DummyFields: ['Id','Name', 'Age', 'Date Of Birth']
         }
     }
-    handleChangeDatatype = (e) => {
-        console.log(e);
+    handleChangeDataType = (e) => {
         this.setState({dataTypeInitial: e.target.value });
     };
     render() {
-        console.log(this.state);
         return (
                 <div className="container my-5 card p-5">
                     <h3 className={'my-3'}>Title</h3>
@@ -31,12 +32,48 @@ class AttributeEdit extends Component {
                     <label htmlFor="type" className={'mt-3'}>Type</label>
                     <div className="dropdown">
                         <select className="custom-select"
-                                onChange={this.handleChangeDatatype}
+                                onChange={this.handleChangeDataType}
                                 id="inputGroupSelect04">
                             {this.state.dataTypes.map((v, ind) =>
-                                <option key={ind} value={this.state.dataTypeInitial}>{v}</option>
+                                <option key={ind} value={v}>{v}</option>
                             )}
                         </select>
+                    </div>
+                    {(this.state.dataTypeInitial === 'Relation (One)' || this.state.dataTypeInitial === 'Relation (Many)')
+                    && <div>
+                        <label htmlFor="type" className={'mt-3'}>Relation Entity</label>
+                        <div className="dropdown">
+                            <select className="custom-select"
+                                    id="inputGroupSelect04">
+                                {this.state.DummyEntities.map((v, ind) =>
+                                    <option key={ind} value={v}>{v}</option>
+                                )}
+                            </select>
+                        </div>
+                    </div>}
+                    {(this.state.dataTypeInitial === 'Relation (One)' || this.state.dataTypeInitial === 'Relation (Many)')
+                    && <div>
+                        <label htmlFor="type" className={'mt-3'}>Relation Field</label>
+                        <div className="dropdown">
+                            <select className="custom-select"
+                                    id="inputGroupSelect04">
+                                {this.state.DummyFields.map((v, ind) =>
+                                    <option key={ind} value={v}>{v}</option>
+                                )}
+                            </select>
+                        </div>
+                    </div>}
+                    <div className='row mt-3'>
+                        <div className='col-6'>
+                            <Link to='/edit'>
+                                <button type="button" className="btn btn-block btn-outline-secondary">
+                                    Cancel
+                                </button>
+                            </Link>
+                        </div>
+                        <div className='col-6'>
+                            <button type="button" className="btn btn-block btn-outline-success">Save</button>
+                        </div>
                     </div>
 
                 </div>
