@@ -16,6 +16,7 @@ const RouterComponent = () =>{
             <Route exact path='/entity/:editId/field/:id/edit' component={AttributeEdit}/>
             <Route path='/login' component={Login}/>
             <Route path='/register' component={Register}/>
+            <Route path='/new' component={EditEntity}/>
         </Router>
     )
 };
