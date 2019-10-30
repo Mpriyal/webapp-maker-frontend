@@ -1,10 +1,11 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import '../App.css'
 
 
 const Navbar = () => {
     return (
-        <nav className="navbar fixed-top navbar-expand-lg navbar-light" style={{backgroundColor: '#e3f2fd'}}>
+        <nav className="navbar fixed-top navbar-expand-lg navbar-dark" style={{backgroundColor: '#007bff'}}>
             <Link className="navbar-brand" to="/">WebAppMaker</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -19,7 +20,7 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-nav ml-auto">
                     <Link className="nav-item nav-link" to="/login">
-                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">
+                        <button className="btn btn-success my-2 my-sm-0" type="submit">
                             Login
                         </button>
                     </Link>
