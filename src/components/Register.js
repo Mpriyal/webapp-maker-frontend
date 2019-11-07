@@ -28,7 +28,7 @@ class Register extends Component {
         };
         try {
             console.log(userData);
-            const user = await axios.post('localhost:4000/api/register', userData,  {withCredentials: true});
+            const user = await axios.post('http://localhost:4000/api/register', userData);
             console.log('registration successful',user)
         }
         catch (e) {
