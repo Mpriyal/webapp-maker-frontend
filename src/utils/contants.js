@@ -96,6 +96,6 @@ const canonical = {
         }]
     }],
     meta: []
-}
+};
 
 export default canonical;
