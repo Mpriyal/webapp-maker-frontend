@@ -1,29 +1,13 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import { registerUser } from '../Services/userService'
+import {Input} from '../UI/Input';
 
-const Input = (values) => {
-    return (<div className="form-group">
-        <label htmlFor={values.id}>{values.name}</label>
-        <input
-            onChange={(e) => values.onChange(e.target.value)}
-            type={values.type} className="form-control" id={values.id}
-            placeholder={values.placeholder} />
-        {values.type === 'email'
-        && <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>}
-    </div>)
-};
 class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-            username: 'abc'
-
+            firstName: '', lastName: '', email: '', password: '', confirmPassword: '', username: 'abc'
         }
     }
 
@@ -85,7 +69,7 @@ class Register extends Component {
                                placeholder = 'Re-type Password'
                                type='password'
                                onChange={(e) => this.setState({confirmPassword: e})} />
-                        <button onClick={this.handleRegister} type="submit" className="btn btn-primary mt-4">Submit</button>
+                        <button onClick={this.handleRegister} type="button" className="btn btn-primary mt-4">Submit</button>
                     </form>
                     <Link className={'mx-5 px-5'} to={'/login'}>Have an account? Login.</Link>
                 </div>
