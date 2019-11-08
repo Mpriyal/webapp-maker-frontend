@@ -8,6 +8,7 @@ const canonical = {
         id: 1,
         name: 'Movies',
         attributes: [{
+            id: 1,
             name: 'Id',
             type: 'NUMBER',
             validations: [{
