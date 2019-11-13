@@ -3,11 +3,17 @@ import EntityEditAttributes from './EntityEditAttributes';
 import EntityEditProperties from './EntityEditProperties';
 import EntityEditBasic from './EntityEditBasic';
 import { Link } from 'react-router-dom';
+import Navbar from "./Navbar";
+import axios from 'axios';
+
 export default class EditEntity extends Component {
     constructor(props) {
         super(props);
+        console.log(this.props.match.params);
         this.state = {
             role: 'basic',
+            entity1: {},
+            fields: [],
             entity: {
                 id: 1,
                 name: 'Movies',
@@ -33,6 +39,23 @@ export default class EditEntity extends Component {
             }
         }
     }
+    componentDidMount = async () => {
+        try {
+            let entity = await axios.get('http://localhost:4000/api/user/5dc1ffd0e8bcb8621c4eab6b/project/5dc6454be60ec981929587e4/entity/' + this.props.match.params.editId);
+            if(entity) {
+                this.setState({entity1: entity.data[0]})
+            }
+            let fields = await axios.get('http://localhost:4000/api/user/5dc1ffd0e8bcb8621c4eab6b/project/5dc6454be60ec981929587e4/entity/' + this.props.match.params.editId + '/field');
+            if(fields) {
+                this.setState({fields: fields.data})
+            }
+        }
+        catch (e) {
+            console.log('Cannot get entity', e)
+        }
+    };
+
+
     addNewAttribute = () => {
         let newentity = this.state.entity;
         let newAttributes = this.state.entity.attributes;
@@ -51,9 +74,18 @@ export default class EditEntity extends Component {
         newentity.attributes = newAttributes
         this.setState({entity: newentity})
     };
+    OnNameChange = (e) => {
+
+    };
+
+    onLabelChange = (e) => {
+
+    };
     render() {
+        console.log('the dtate,', this.state);
         return (
             <div className="container my-5">
+                <Navbar/>
                 <h2 className="my-4 mx-2">Edit Entity</h2>
                 <div className=" mt-5 card">
                     <ul className="nav nav-tabs" id="myTab" role="tablist">
@@ -76,7 +108,8 @@ export default class EditEntity extends Component {
                                 onClick={() => this.setState({ role: 'properties' })}>Properties</p>
                         </li>
                     </ul>
-                    {this.state.role === 'basic' && <EntityEditBasic entity={this.state.entity}/>}
+                    {this.state.role === 'basic' &&
+                    <EntityEditBasic entity={this.state.entity1} onNameChange={(e) => this.OnNameChange(e)} onLabelChange={(e) => this.onLabelChange(e)}  />}
                     {this.state.role === 'attributes' && <EntityEditAttributes entityId={this.state.entity.id} addNewAttribute={this.addNewAttribute} attributes={this.state.entity.attributes}/>}
                     {this.state.role === 'properties' && <EntityEditProperties/>}
                     <div className='row'>

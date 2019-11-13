@@ -1,11 +1,19 @@
 import React,{Component} from 'react'
-import Navbar from "../components/Navbar";
+import Projects from "../components/Projects";
+import Landing from "../components/Landing";
 
 export default class Home extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            isAuthenticated: false
+        }
+    }
+
     render() {
         return (
             <div className="home">
-                <Navbar/>
+                {this.state.isAuthenticated ? <Projects/> : <Landing />}
             </div>
         )
     }

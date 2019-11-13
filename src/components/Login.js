@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import {Input} from '../UI/Input';
+import Navbar from "./Navbar";
 
 class Login extends React.Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class Login extends React.Component {
     render() {
         return (
             <div className="login pt-5" style={{'height': '100%'}}>
+                <Navbar/>
                 <div className={'container'}>
                     <div className={'card p-5 m-5 shadow-lg'} style={{'maxWidth': '900px'}}>
                         <h1 className={'mx-5 px-5'}>Sign In</h1>

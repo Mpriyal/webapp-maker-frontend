@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
-import { registerUser } from '../Services/userService'
 import {Input} from '../UI/Input';
+import Navbar from "./Navbar";
 
 class Register extends Component {
     constructor(props) {
@@ -13,14 +13,14 @@ class Register extends Component {
 
     handleRegister = async (e) => {
         e.preventDefault();
-        const userData = {
-            username: this.state.username,
-            password: this.state.password,
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-            phoneNo: 12345
-        };
+        // const userData = {
+        //     username: this.state.username,
+        //     password: this.state.password,
+        //     firstName: this.state.firstName,
+        //     lastName: this.state.lastName,
+        //     email: this.state.email,
+        //     phoneNo: 12345
+        // };
         try {
             console.log('the state', this.state)
             // const user = await registerUser(userData);
@@ -35,6 +35,7 @@ class Register extends Component {
     render() {
         return (
             <div className="login pt-5 container" style={{'height' : '100%'}}>
+                <Navbar/>
                 <div className={'card p-5 m-5 shadow-lg'} style={{'maxWidth': '900px'}}>
                     <h1 className={'mx-5 px-5'}>Register</h1>
                     <form className={'m-5 p-5'}>
