@@ -74,13 +74,6 @@ export default class EditEntity extends Component {
         newentity.attributes = newAttributes
         this.setState({entity: newentity})
     };
-    OnNameChange = (e) => {
-
-    };
-
-    onLabelChange = (e) => {
-
-    };
     render() {
         console.log('the dtate,', this.state);
         return (
@@ -108,9 +101,14 @@ export default class EditEntity extends Component {
                                 onClick={() => this.setState({ role: 'properties' })}>Properties</p>
                         </li>
                     </ul>
-                    {this.state.role === 'basic' &&
+                    {this.state.role === 'basic' && this.state.entity1.name && this.state.entity1.label &&
                     <EntityEditBasic entity={this.state.entity1} onNameChange={(e) => this.OnNameChange(e)} onLabelChange={(e) => this.onLabelChange(e)}  />}
-                    {this.state.role === 'attributes' && <EntityEditAttributes entityId={this.state.entity.id} addNewAttribute={this.addNewAttribute} attributes={this.state.entity.attributes}/>}
+                    {this.state.role === 'attributes' && this.state.fields &&
+                    <EntityEditAttributes
+                        fields={this.state.fields}
+                        entityId={this.state.entity1._id}
+                        addNewAttribute={this.addNewAttribute}
+                        attributes={this.state.entity.attributes}/>}
                     {this.state.role === 'properties' && <EntityEditProperties/>}
                     <div className='row'>
                         <div className='col-6'>

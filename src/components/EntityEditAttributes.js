@@ -1,10 +1,12 @@
 import React from 'react'
 import AttributeEdit from "./AttributeEdit";
 import {Link} from "react-router-dom";
+import axios from "axios";
+import { URL } from '../utils/contants'
 
 const Head = () => {
     return (
-    <thead>
+        <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
@@ -12,7 +14,7 @@ const Head = () => {
             <th scope="col">Validations</th>
             <th scope="col">Edit/Delete</th>
         </tr>
-    </thead>)
+        </thead>)
 };
 
 class EnitityEditAttributes extends React.Component {
@@ -20,42 +22,74 @@ class EnitityEditAttributes extends React.Component {
         super(props);
         this.state = {
             editing : false,
-            entity: {}
+            entity: {},
+            fields: []
         }
     }
-    handler = () => {
+    componentDidMount () {
+        this.loadFields()
+    }
+
+    loadFields = async () => {
+        try {
+            let fields = await axios.get(URL + '/entity/' + this.props.entityId+ '/field');
+            if(fields) {
+                this.setState({fields: fields.data})
+            }
+        }
+        catch (e) {
+            console.log('Cannot get entity', e)
+        }
+    };
+    addField = async () => {
+        const defaultField = {
+            "name" : "Default",
+            "label" : "Default",
+            "type": "Text",
+            "entityId" : this.props.entityId
+        };
+
+        try {
+            let newField = await axios.post(URL + '/entity/' + this.props.entityId+ '/field',defaultField );
+            if(newField) {
+                this.loadFields()
+            }
+        }
+        catch (e) {
+            console.log('Cannot get entity', e)
+        }
         this.props.addNewAttribute()
     };
-    handleNameChange = (e) => {
-        let newEntity = this.state.entity;
-        newEntity.name = e.target.value;
-        this.setState({
-            entity : newEntity
-        });
-    };
-    handleTypeChange = (e) => {
-        // console.log('handle change called', e)
-    };
-    handleValidationChange = (e) => {
-        // console.log('handle change called', e)
+    deleteField = async (fieldObj) => {
+
+        try {
+            let field = await axios.delete(URL + '/entity/' + this.props.entityId+ '/field/' + fieldObj._id);
+            if(field) {
+                this.loadFields()
+            }
+        }
+        catch (e) {
+            console.log('Cannot get entity', e)
+        }
     };
     render() {
         return (
             <div className='container my-5'>
                 {this.state.editing && <AttributeEdit/>}
-                <button type="button" className="btn btn-outline-primary" onClick={this.handler}>Add New Attribute</button>
+                <button type="button" className="btn btn-outline-primary" onClick={this.addField}>Add New Attribute</button>
                 <table className="table table-striped mt-5">
                     <Head/>
                     <tbody>
-                    {this.props.attributes.map((v, index) => (
-                        <tr key={index}>
+                    {this.state.fields.map((v,index) => (
+                        <tr key={v._id}>
                             <th scope="row">{index + 1}</th>
                             <td>{v.name}</td>
                             <td>{v.type}</td>
                             <td>
-                                {v.validations.map((validation, i) => (
-                                    <p key={i}>{validation.name}</p>
-                                ))}
+                                Required
+                                {/*{v.validations.map((validation, i) => (*/}
+                                {/*<p key={i}>{validation.name}</p>*/}
+                                {/*))}*/}
                             </td>
                             <td>
                                 <div className="row">
@@ -67,7 +101,7 @@ class EnitityEditAttributes extends React.Component {
 
                                     </div>
                                     <div className='col-6'>
-                                        <i className="fa fa-trash"/>
+                                        <i onClick={() => this.deleteField(v)} className="fa fa-trash"/>
                                     </div>
                                 </div>
                             </td>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import EntityItem from '../components/EntityItem'
-import canonical from '../utils/contants'
+import { canonical } from '../utils/contants'
 import AddNewEntity from '../components/AddNewEntity'
 import { Link} from 'react-router-dom'
 import Navbar from "../components/Navbar";
