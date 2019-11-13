@@ -13,7 +13,7 @@ const RouterComponent = () =>{
             <Route path='/' component={Home}/>
             <Route exact path='/entity' component={Entity}/>
             <Route exact path='/entity/:editId/edit' component={EditEntity}/>
-            <Route exact path='/entity/:editId/field/:id/edit' component={AttributeEdit}/>
+            <Route exact path='/entity/:entityId/field/:fieldId/edit' component={AttributeEdit}/>
             <Route path='/login' component={Login}/>
             <Route path='/register' component={Register}/>
             <Route path='/new' component={EditEntity}/>

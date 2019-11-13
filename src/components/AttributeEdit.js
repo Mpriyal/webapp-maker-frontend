@@ -1,29 +1,47 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
+import axios from "axios";
+import {URL} from "../utils/contants";
 
 class AttributeEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataTypeInitial: 'Text',
-            dataTypes: ['Text', 'Integer', 'Decimal', 'Date',
+            name: '',
+            type: '',
+            label: '',
+            dataTypes: ['Text', 'Number', 'Decimal', 'Date',
                 'DateTime', 'Boolean', 'Enumeration', 'Relation (One)', 'Relation (Many)'],
             DummyEntities: ['Movies', 'Actors', 'Library', 'Books'],
             DummyFields: ['Id','Name', 'Age', 'Date Of Birth']
         }
     }
+    componentDidMount() {
+        this.loadFieldData();
+    }
+    loadFieldData = async () => {
+        try {
+            let field = await axios.get(URL + '/entity/' + this.props.match.params.entityId+ '/field/' + this.props.match.params.fieldId);
+            if(field) {
+                this.setState({...this.state,... field.data[0]});
+            }
+        } catch (e) {
+            console.log('Cannot get entity', e)
+        }
+    };
     handleChangeDataType = (e) => {
         this.setState({dataTypeInitial: e.target.value });
     };
     render() {
+        console.log('the state is', this.state)
         return (
                 <div className="container my-5 card p-5">
                     <h3 className={'my-3'}>Title</h3>
                     <label htmlFor="entity">Name</label>
                     <input type="text" className="form-control"
                            id="entity"
-                           value={this.state.entityName}
-                           onChange={(e) => this.setState({entityName: e.target.value})}/>
+                           value={this.state.name}
+                           onChange={(e) => this.setState({name: e.target.value})}/>
                     <label htmlFor="label" className={'mt-3'}>Label</label>
                     <input type="text" className="form-control"
                            id="label" placeholder="Label"
@@ -32,6 +50,7 @@ class AttributeEdit extends Component {
                     <label htmlFor="type" className={'mt-3'}>Type</label>
                     <div className="dropdown">
                         <select className="custom-select"
+                                value={this.state.type}
                                 onChange={this.handleChangeDataType}
                                 id="inputGroupSelect04">
                             {this.state.dataTypes.map((v, ind) =>
