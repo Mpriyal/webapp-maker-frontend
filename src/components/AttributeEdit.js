@@ -84,11 +84,12 @@ class AttributeEdit extends Component {
                     </div>}
                     <div className='row mt-3'>
                         <div className='col-6'>
-                            <Link to='/edit'>
-                                <button type="button" className="btn btn-block btn-outline-secondary">
+                                <button
+                                    type="button"
+                                    onClick={() => this.props.history.goBack()}
+                                    className="btn btn-block btn-outline-secondary">
                                     Cancel
                                 </button>
-                            </Link>
                         </div>
                         <div className='col-6'>
                             <button type="button" className="btn btn-block btn-outline-success">Save</button>

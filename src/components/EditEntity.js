@@ -113,7 +113,9 @@ export default class EditEntity extends Component {
                     <div className='row'>
                         <div className='col-6'>
                             <Link to='/entity'>
-                                <button type="button" className="btn btn-block btn-outline-secondary">
+                                <button
+                                    type="button"
+                                    className="btn btn-block btn-outline-secondary">
                                     Cancel
                                 </button>
                             </Link>
