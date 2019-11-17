@@ -5,6 +5,7 @@ import EntityEditBasic from './EntityEditBasic';
 import { Link } from 'react-router-dom';
 import Navbar from "./Navbar";
 import axios from 'axios';
+import {URL} from "../utils/contants";
 
 export default class EditEntity extends Component {
     constructor(props) {
@@ -41,11 +42,11 @@ export default class EditEntity extends Component {
     }
     componentDidMount = async () => {
         try {
-            let entity = await axios.get('http://localhost:4000/api/user/5dc1ffd0e8bcb8621c4eab6b/project/5dc6454be60ec981929587e4/entity/' + this.props.match.params.editId);
+            let entity = await axios.get(URL + '/entity/' + this.props.match.params.editId);
             if(entity) {
                 this.setState({entity1: entity.data[0]})
             }
-            let fields = await axios.get('http://localhost:4000/api/user/5dc1ffd0e8bcb8621c4eab6b/project/5dc6454be60ec981929587e4/entity/' + this.props.match.params.editId + '/field');
+            let fields = await axios.get(URL + '/entity/' + this.props.match.params.editId + '/field');
             if(fields) {
                 this.setState({fields: fields.data})
             }

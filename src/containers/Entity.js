@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import EntityItem from '../components/EntityItem'
-import { canonical } from '../utils/contants'
+import { canonical, URL } from '../utils/contants'
 import AddNewEntity from '../components/AddNewEntity'
 import { Link} from 'react-router-dom'
 import Navbar from "../components/Navbar";
@@ -16,7 +16,7 @@ export default class Entity extends Component {
     }
     componentDidMount = async () => {
         try {
-            let entities = await axios.get("http://localhost:4000/api/user/5dc1ffd0e8bcb8621c4eab6b/project/5dc6454be60ec981929587e4/entity");
+            let entities = await axios.get(URL + "/entity");
             if(entities) {
                 this.setState({
                     entities : entities.data
@@ -30,7 +30,7 @@ export default class Entity extends Component {
     };
     rerenderEntities = async ()=> {
         try {
-            let entities = await axios.get("http://localhost:4000/api/user/5dc1ffd0e8bcb8621c4eab6b/project/5dc6454be60ec981929587e4/entity");
+            let entities = await axios.get(URL + "/entity");
             if(entities) {
                 this.setState({
                     entities : entities.data
@@ -52,9 +52,9 @@ export default class Entity extends Component {
                     {this.state.entities.map((entity) => (
                         <EntityItem relation={entity} key={entity._id} rerenderEntities={this.rerenderEntities}/>
                     ))}
-                    <Link to='/new' className= 'col-3 my-3'>
-                        <AddNewEntity />
-                    </Link>
+                    <div className= 'col-3 my-3'>
+                        <AddNewEntity refreshEntities={this.rerenderEntities} />
+                    </div>
                 </div>
             </div>
         )

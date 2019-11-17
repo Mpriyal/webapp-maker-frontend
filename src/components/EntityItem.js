@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+import {URL} from "../utils/contants";
 
 const onDeleteClick = async (props) => {
     /*
@@ -9,7 +10,7 @@ const onDeleteClick = async (props) => {
     console.log('The enitity to delete is: ', props);
 
     try {
-        let deletedEntity = await axios.delete('http://localhost:4000/api/user/5dc1ffd0e8bcb8621c4eab6b/project/5dc6454be60ec981929587e4/entity/' + props.relation._id)
+        let deletedEntity = await axios.delete(URL + '/entity/' + props.relation._id)
         if(deletedEntity) {
             props.rerenderEntities()
         }
