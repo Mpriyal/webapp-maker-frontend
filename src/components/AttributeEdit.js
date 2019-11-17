@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Link} from "react-router-dom";
 import axios from "axios";
 import {URL} from "../utils/contants";
 
@@ -31,7 +30,7 @@ class AttributeEdit extends Component {
             let field = await axios.get(URL + '/entity/' + this.props.match.params.entityId+ '/field/' + this.props.match.params.fieldId);
             if(field) {
                 console.log('the fields is ', field)
-                this.setState({...this.state,... field.data[0]});
+                this.setState({...this.state,...field.data[0]});
             }
         } catch (e) {
             console.log('Cannot get entity', e)

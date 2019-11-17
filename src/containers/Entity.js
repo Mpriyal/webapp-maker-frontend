@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import EntityItem from '../components/EntityItem'
 import { canonical, URL } from '../utils/contants'
 import AddNewEntity from '../components/AddNewEntity'
-import { Link} from 'react-router-dom'
 import Navbar from "../components/Navbar";
 import axios from 'axios';
 

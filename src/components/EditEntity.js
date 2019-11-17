@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import EntityEditAttributes from './EntityEditAttributes';
 import EntityEditProperties from './EntityEditProperties';
 import EntityEditBasic from './EntityEditBasic';
-import { Link } from 'react-router-dom';
 import Navbar from "./Navbar";
 import axios from 'axios';
 import {URL} from "../utils/contants";
