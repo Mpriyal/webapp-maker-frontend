@@ -36,76 +36,76 @@ class AttributeEdit extends Component {
             console.log('Cannot get entity', e)
         }
     };
-    handleChangeDataType = (e) => {
-        this.setState({dataTypeInitial: e.target.value });
+     handleChangeDataType = (e) => {
+        console.log('the handleChangeDataType', e)
+        this.setState({type: e.target.value });
     };
     render() {
-        console.log('the state is', this.state)
+        console.log('the state is', this.state);
         return (
-                <div className="container my-5 card p-5">
-                    <h3 className={'my-3'}>{this.state.name}</h3>
-                    <label htmlFor="entity">Name</label>
-                    <input type="text" className="form-control"
-                           id="entity"
-                           value={this.state.name}
-                           onChange={(e) => this.setState({name: e.target.value})}/>
-                    <label htmlFor="label" className={'mt-3'}>Label</label>
-                    <input type="text" className="form-control"
-                           id="label" placeholder="Label"
-                           value={this.state.label}
-                           onChange={(e) => this.setState({label: e.target.value})}/>
-                    <label htmlFor="type" className={'mt-3'}>Type</label>
+            <div className="container my-5 card p-5">
+                <h3 className={'my-3'}>{this.state.name}</h3>
+                <label htmlFor="entity">Name</label>
+                <input type="text" className="form-control"
+                       id="entity"
+                       value={this.state.name}
+                       onChange={(e) => this.setState({name: e.target.value})}/>
+                <label htmlFor="label" className={'mt-3'}>Label</label>
+                <input type="text" className="form-control"
+                       id="label" placeholder="Label"
+                       value={this.state.label}
+                       onChange={(e) => this.setState({label: e.target.value})}/>
+                <label htmlFor="type" className={'mt-3'}>Type</label>
+                <div className="dropdown">
+                    <select className="custom-select"
+                            value={this.state.type}
+                            onChange={this.handleChangeDataType}
+                            id="inputGroupSelect04">
+                        {this.state.dataTypes.map((v, ind) =>
+                            <option key={ind} value={v}>{v}</option>
+                        )}
+                    </select>
+                </div>
+                {(this.state.dataTypeInitial === 'Relation (One)' || this.state.dataTypeInitial === 'Relation (Many)')
+                && <div>
+                    <label htmlFor="type" className={'mt-3'}>Relation Entity</label>
                     <div className="dropdown">
                         <select className="custom-select"
-                                value={this.state.type}
-                                onChange={this.handleChangeDataType}
                                 id="inputGroupSelect04">
-                            {this.state.dataTypes.map((v, ind) =>
+                            {this.state.DummyEntities.map((v, ind) =>
                                 <option key={ind} value={v}>{v}</option>
                             )}
                         </select>
                     </div>
-                    {(this.state.dataTypeInitial === 'Relation (One)' || this.state.dataTypeInitial === 'Relation (Many)')
-                    && <div>
-                        <label htmlFor="type" className={'mt-3'}>Relation Entity</label>
-                        <div className="dropdown">
-                            <select className="custom-select"
-                                    id="inputGroupSelect04">
-                                {this.state.DummyEntities.map((v, ind) =>
-                                    <option key={ind} value={v}>{v}</option>
-                                )}
-                            </select>
-                        </div>
-                    </div>}
-                    {(this.state.dataTypeInitial === 'Relation (One)' || this.state.dataTypeInitial === 'Relation (Many)')
-                    && <div>
-                        <label htmlFor="type" className={'mt-3'}>Relation Field</label>
-                        <div className="dropdown">
-                            <select className="custom-select"
-                                    id="inputGroupSelect04">
-                                {this.state.DummyFields.map((v, ind) =>
-                                    <option key={ind} value={v}>{v}</option>
-                                )}
-                            </select>
-                        </div>
-                    </div>}
-                    <div className='row mt-3'>
-                        <div className='col-6'>
-                                <button
-                                    type="button"
-                                    onClick={() => this.props.history.goBack()}
-                                    className="btn btn-block btn-outline-secondary">
-                                    Cancel
-                                </button>
-                        </div>
-                        <div className='col-6'>
-                            <button type="button"
-                                    onClick={this.save}
-                                    className="btn btn-block btn-outline-success">Save</button>
-                        </div>
+                </div>}
+                {(this.state.dataTypeInitial === 'Relation (One)' || this.state.dataTypeInitial === 'Relation (Many)')
+                && <div>
+                    <label htmlFor="type" className={'mt-3'}>Relation Field</label>
+                    <div className="dropdown">
+                        <select className="custom-select"
+                                id="inputGroupSelect04">
+                            {this.state.DummyFields.map((v, ind) =>
+                                <option key={ind} value={v}>{v}</option>
+                            )}
+                        </select>
                     </div>
-
+                </div>}
+                <div className='row mt-3'>
+                    <div className='col-6'>
+                        <button
+                            type="button"
+                            onClick={() => this.props.history.goBack()}
+                            className="btn btn-block btn-outline-secondary">
+                            Cancel
+                        </button>
+                    </div>
+                    <div className='col-6'>
+                        <button type="button"
+                                onClick={this.save}
+                                className="btn btn-block btn-outline-success">Save</button>
+                    </div>
                 </div>
+            </div>
         );
     }
 }
