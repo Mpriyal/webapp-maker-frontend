@@ -75,6 +75,9 @@ export default class EditEntity extends Component {
         newentity.attributes = newAttributes
         this.setState({entity: newentity})
     };
+    save = () => {
+
+    };
     render() {
         console.log('the dtate,', this.state);
         return (
@@ -111,20 +114,6 @@ export default class EditEntity extends Component {
                         addNewAttribute={this.addNewAttribute}
                         attributes={this.state.entity.attributes}/>}
                     {this.state.role === 'properties' && <EntityEditProperties/>}
-                    <div className='row'>
-                        <div className='col-6'>
-                            <Link to='/entity'>
-                                <button
-                                    type="button"
-                                    className="btn btn-block btn-outline-secondary">
-                                    Cancel
-                                </button>
-                            </Link>
-                        </div>
-                        <div className='col-6'>
-                            <button type="button" className="btn btn-block btn-outline-success">Save</button>
-                        </div>
-                    </div>
                 </div>
             </div>
         )

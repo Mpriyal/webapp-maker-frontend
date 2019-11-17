@@ -109,6 +109,23 @@ class EnitityEditAttributes extends React.Component {
                     ))}
                     </tbody>
                 </table>
+                <div className='row mt-4'>
+                    <div className='col-6'>
+                        <Link to='/entity'>
+                            <button
+                                type="button"
+                                className="btn btn-block btn-outline-secondary">
+                                Cancel
+                            </button>
+                        </Link>
+                    </div>
+                    <div className='col-6'>
+                        <button
+                            type="button"
+                            onClick={this.save}
+                            className="btn btn-block btn-outline-success">Save</button>
+                    </div>
+                </div>
             </div>
         )
     }

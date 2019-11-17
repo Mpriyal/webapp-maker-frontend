@@ -19,10 +19,18 @@ class AttributeEdit extends Component {
     componentDidMount() {
         this.loadFieldData();
     }
+    save = async () => {
+        let updatedField = await axios.put(URL + '/entity/'+this.props.match.params.entityId+'/field/'+ this.props.match.params.fieldId,{
+            name: this.state.name,
+            type: this.state.type,
+            label: this.state.label
+        })
+    };
     loadFieldData = async () => {
         try {
             let field = await axios.get(URL + '/entity/' + this.props.match.params.entityId+ '/field/' + this.props.match.params.fieldId);
             if(field) {
+                console.log('the fields is ', field)
                 this.setState({...this.state,... field.data[0]});
             }
         } catch (e) {
@@ -36,7 +44,7 @@ class AttributeEdit extends Component {
         console.log('the state is', this.state)
         return (
                 <div className="container my-5 card p-5">
-                    <h3 className={'my-3'}>Title</h3>
+                    <h3 className={'my-3'}>{this.state.name}</h3>
                     <label htmlFor="entity">Name</label>
                     <input type="text" className="form-control"
                            id="entity"
@@ -92,7 +100,9 @@ class AttributeEdit extends Component {
                                 </button>
                         </div>
                         <div className='col-6'>
-                            <button type="button" className="btn btn-block btn-outline-success">Save</button>
+                            <button type="button"
+                                    onClick={this.save}
+                                    className="btn btn-block btn-outline-success">Save</button>
                         </div>
                     </div>
 
