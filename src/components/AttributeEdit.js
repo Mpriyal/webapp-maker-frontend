@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from "axios";
 import {URL} from "../utils/contants";
+import Navbar from "./Navbar";
 
 class AttributeEdit extends Component {
     constructor(props) {
@@ -9,6 +10,7 @@ class AttributeEdit extends Component {
             name: '',
             type: '',
             label: '',
+            enumeration: '',
             dataTypes: ['Text', 'Number', 'Decimal', 'Date',
                 'DateTime', 'Boolean', 'Enumeration', 'Relation (One)', 'Relation (Many)'],
             DummyEntities: ['Movies', 'Actors', 'Library', 'Books'],
@@ -44,6 +46,7 @@ class AttributeEdit extends Component {
         console.log('the state is', this.state);
         return (
             <div className="container my-5 card p-5">
+                <Navbar/>
                 <h3 className={'my-3'}>{this.state.name}</h3>
                 <label htmlFor="entity">Name</label>
                 <input type="text" className="form-control"
@@ -89,6 +92,14 @@ class AttributeEdit extends Component {
                             )}
                         </select>
                     </div>
+                </div>}
+                {(this.state.type === 'Enumeration')
+                && <div>
+                    <label htmlFor="type" className={'mt-3'}>List the enumerations (Comma separated)</label>
+                    <input type="text" className="form-control"
+                           id="enumeration"
+                           value={this.state.enumeration}
+                           onChange={(e) => this.setState({enumeration: e.target.value})}/>
                 </div>}
                 <div className='row mt-3'>
                     <div className='col-6'>
