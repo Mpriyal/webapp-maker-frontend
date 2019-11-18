@@ -16,6 +16,10 @@ export default class Entity extends Component {
     componentDidMount = async () => {
         try {
             let entities = await axios.get(URL + "/entity");
+            let current = await axios.get('http://localhost:4000/api/profile', {withCredentials: true});
+            if (current) {
+                console.log('the current iser is ', current)
+            }
             if(entities) {
                 this.setState({
                     entities : entities.data

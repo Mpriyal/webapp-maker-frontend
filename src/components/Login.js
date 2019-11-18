@@ -2,15 +2,24 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import {Input} from '../UI/Input';
 import Navbar from "./Navbar";
+import {loginUser} from "../Services/userService";
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {email: '', password: ''}
+        this.state = {email: '', password: '', loggedIn: false}
     }
 
-    submitLogin = () => {
-        console.log('The email and password', this.state.email, this.state.password);
+    submitLogin = async () => {
+        try {
+            const user = await loginUser({email:this.state.email , password:this.state.password });
+            if(user) {
+                this.setState({loggedIn: true});
+                this.props.history.push('/');
+            }
+        }catch (e) {
+            this.props.history.push('/login');
+        }
     };
     render() {
         return (

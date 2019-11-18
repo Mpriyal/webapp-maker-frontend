@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import {Input} from '../UI/Input';
 import Navbar from "./Navbar";
+import {registerUser} from "../Services/userService";
 
 class Register extends Component {
     constructor(props) {
@@ -13,20 +14,20 @@ class Register extends Component {
 
     handleRegister = async (e) => {
         e.preventDefault();
-        // const userData = {
-        //     username: this.state.username,
-        //     password: this.state.password,
-        //     firstName: this.state.firstName,
-        //     lastName: this.state.lastName,
-        //     email: this.state.email,
-        //     phoneNo: 12345
-        // };
+        const userData = {
+            username: this.state.username,
+            password: this.state.password,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            phoneNo: 12345
+        };
         try {
             console.log('the state', this.state)
-            // const user = await registerUser(userData);
-            // if(user) {
-            //     this.props.history.push('/');
-            // }
+            const user = await registerUser(userData);
+            if(user) {
+                this.props.history.push('/');
+            }
         }
         catch (e) {
             alert('Not able to register')

@@ -66,7 +66,7 @@ class AttributeEdit extends Component {
                         )}
                     </select>
                 </div>
-                {(this.state.dataTypeInitial === 'Relation (One)' || this.state.dataTypeInitial === 'Relation (Many)')
+                {(this.state.type === 'Relation (One)' || this.state.type === 'Relation (Many)')
                 && <div>
                     <label htmlFor="type" className={'mt-3'}>Relation Entity</label>
                     <div className="dropdown">
@@ -78,7 +78,7 @@ class AttributeEdit extends Component {
                         </select>
                     </div>
                 </div>}
-                {(this.state.dataTypeInitial === 'Relation (One)' || this.state.dataTypeInitial === 'Relation (Many)')
+                {(this.state.type === 'Relation (One)' || this.state.type === 'Relation (Many)')
                 && <div>
                     <label htmlFor="type" className={'mt-3'}>Relation Field</label>
                     <div className="dropdown">

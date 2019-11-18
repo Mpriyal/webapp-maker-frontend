@@ -10,7 +10,7 @@ import Register from "./components/Register";
 const RouterComponent = () =>{
     return (
         <Router>
-            <Route path='/' component={Home}/>
+            <Route exact path='/' component={Home}/>
             <Route exact path='/entity' component={Entity}/>
             <Route exact path='/entity/:editId/edit' component={EditEntity}/>
             <Route exact path='/entity/:entityId/field/:fieldId/edit' component={AttributeEdit}/>
