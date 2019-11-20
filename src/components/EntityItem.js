@@ -5,39 +5,62 @@ import {URL} from "../utils/contants";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const onDeleteClick = async (props) => {
-    try {
-        let deletedEntity = await axios.delete(URL + '/entity/' + props.relation._id)
-        if(deletedEntity) {
-            props.rerenderEntities()
+
+class EntityItem extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            fields: []
         }
     }
-    catch (e) {
-        toast("Connection error");
+    componentDidMount () {
+        this.loadEntitiesForProject()
     }
-};
 
-const EntityItem = (props) => {
-    return (
-        <div className="card col-5 mx-4 my-4" style = {{"maxWidth" : "500px"}}>
-            <div className="card-body">
-                <span className = {'row'}>
-                    <h2 className="card-title my-3 col-4">{props.relation.name}</h2>
-                    <Link to={`/entity/${props.relation._id}/edit`} className= 'col-3 my-3'>
+    onDeleteClick = async () => {
+        try {
+            let deletedEntity = await axios.delete(URL + '/entity/' + this.props.relation._id)
+            if(deletedEntity) {
+                this.props.rerenderEntities()
+            }
+        }
+        catch (e) {
+            toast("Connection error");
+        }
+    };
+
+    loadEntitiesForProject = async () => {
+        try {
+            let fields = await axios.get(URL + "/entity/"  + this.props.relation._id + '/field');
+            if(fields) {
+                this.setState({fields: fields.data});
+            }
+        } catch (e) {
+            toast("Connection error");
+        }
+    };
+    render() {
+        return (
+            <div className="card col-5 mx-4 my-4" style={{"maxWidth": "500px"}}>
+                <div className="card-body">
+                <span className={'row'}>
+                    <h2 className="card-title my-3 col-4">{this.props.relation.name}</h2>
+                    <Link to={`/entity/${this.props.relation._id}/edit`} className='col-3 my-3'>
                         <button type="button" className="btn btn-block btn-outline-primary">Edit</button>
                     </Link>
                     <button type="button"
                             className="btn btn-block btn-outline-danger col-3 my-3"
-                            onClick={() => onDeleteClick(props)}>Delete</button>
+                            onClick={() => this.onDeleteClick(this.props)}>Delete</button>
                 </span>
-                <hr />
-                {/*{props.relation.attributes.map((v, index) => (*/}
-                {/*<p key = {index}>{v.name} : {v.type}</p>*/}
-                {/*))}*/}
+                    <hr/>
+                    {this.state.fields.map((v, index) => (
+                    <p key = {index}>{v.name} : {v.type}</p>
+                    ))}
+                </div>
+                <ToastContainer/>
             </div>
-            <ToastContainer/>
-        </div>
-    )
+        )
+    }
 };
 
 export default EntityItem;
