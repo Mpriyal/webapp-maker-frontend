@@ -10,7 +10,6 @@ class Navbar extends React.Component {
     }
 
     componentDidMount() {
-        console.log('called again')
         this.getCurrentUser()
 
     }

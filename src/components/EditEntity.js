@@ -9,7 +9,6 @@ import {URL} from "../utils/contants";
 export default class EditEntity extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props.match.params);
         this.state = {
             role: 'basic',
             entity1: {},
@@ -78,7 +77,6 @@ export default class EditEntity extends Component {
 
     };
     render() {
-        console.log('the dtate,', this.state);
         return (
             <div className="container my-5">
                 <Navbar/>

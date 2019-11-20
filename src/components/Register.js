@@ -3,6 +3,8 @@ import {Link} from "react-router-dom";
 import {Input} from '../UI/Input';
 import Navbar from "./Navbar";
 import {registerUser} from "../Services/userService";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Register extends Component {
     constructor(props) {
@@ -30,7 +32,7 @@ class Register extends Component {
             }
         }
         catch (e) {
-            alert('Not able to register')
+            toast("Connection error");
         }
     };
     render() {
@@ -75,6 +77,7 @@ class Register extends Component {
                     </form>
                     <Link className={'mx-5 px-5'} to={'/login'}>Have an account? Login.</Link>
                 </div>
+                <ToastContainer/>
             </div>
         );
     }

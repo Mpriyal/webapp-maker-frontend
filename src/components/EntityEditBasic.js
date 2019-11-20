@@ -2,6 +2,8 @@ import React from 'react'
 import {Link} from "react-router-dom";
 import axios from "axios";
 import {URL} from "../utils/contants";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class EntityEditBasic extends React.Component {
     constructor(props) {
@@ -12,10 +14,18 @@ class EntityEditBasic extends React.Component {
         }
     }
     save = async () => {
-        let updatedEntity = await axios.put(URL + '/entity/'+ this.props.entity._id,{
-            name: this.state.entityName,
-            label: this.state.label
-        })
+        try {
+            let updatedEntity = await axios.put(URL + '/entity/'+ this.props.entity._id,{
+                name: this.state.entityName,
+                label: this.state.label
+            });
+            if(updatedEntity) {
+                toast("Entity Updated Successfully");
+            }
+        }catch (e) {
+            toast("Connection error");
+        }
+
     };
     render() {
         return (
@@ -48,6 +58,7 @@ class EntityEditBasic extends React.Component {
                             className="btn btn-block btn-outline-success">Save</button>
                     </div>
                 </div>
+                <ToastContainer />
             </div>
         )
     }

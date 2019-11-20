@@ -4,6 +4,8 @@ import { canonical, URL } from '../utils/contants'
 import AddNewEntity from '../components/AddNewEntity'
 import Navbar from "../components/Navbar";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default class Entity extends Component {
     constructor(props) {
@@ -13,24 +15,10 @@ export default class Entity extends Component {
             entities: []
         }
     }
-    componentDidMount = async () => {
-        try {
-            let entities = await axios.get(URL + "/entity");
-            let current = await axios.get('http://localhost:4000/api/profile', {withCredentials: true});
-            if (current) {
-                console.log('the current iser is ', current)
-            }
-            if(entities) {
-                this.setState({
-                    entities : entities.data
-                })
-            }
-            console.log('the entity is', entities.data);
-        }
-        catch (e) {
-            console.log("the error", e)
-        }
+    componentDidMount() {
+        this.rerenderEntities();
     };
+
     rerenderEntities = async ()=> {
         try {
             let entities = await axios.get(URL + "/entity");
@@ -39,10 +27,9 @@ export default class Entity extends Component {
                     entities : entities.data
                 })
             }
-            console.log('the entity is', entities.data);
         }
         catch (e) {
-            console.log("the error", e)
+            toast("Connection error");
         }
     };
 
@@ -59,6 +46,7 @@ export default class Entity extends Component {
                         <AddNewEntity refreshEntities={this.rerenderEntities} />
                     </div>
                 </div>
+                <ToastContainer/>
             </div>
         )
     }

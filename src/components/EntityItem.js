@@ -2,13 +2,10 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 import {URL} from "../utils/contants";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const onDeleteClick = async (props) => {
-    /*
-    We will make an API call here through redux
-    */
-    console.log('The enitity to delete is: ', props);
-
     try {
         let deletedEntity = await axios.delete(URL + '/entity/' + props.relation._id)
         if(deletedEntity) {
@@ -16,7 +13,7 @@ const onDeleteClick = async (props) => {
         }
     }
     catch (e) {
-        console.log('Could not delete', e);
+        toast("Connection error");
     }
 };
 
@@ -38,6 +35,7 @@ const EntityItem = (props) => {
                 {/*<p key = {index}>{v.name} : {v.type}</p>*/}
                 {/*))}*/}
             </div>
+            <ToastContainer/>
         </div>
     )
 };

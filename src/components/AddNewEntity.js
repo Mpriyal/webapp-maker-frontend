@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import {URL} from "../utils/contants";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class AddNewEntity extends React.Component {
     addEntity = async () => {
@@ -15,7 +17,7 @@ class AddNewEntity extends React.Component {
                 this.props.refreshEntities()
             }
         }catch (e) {
-            console.log('the error is ', e);
+            toast("Connection error");
         }
     };
     render() {
@@ -27,6 +29,7 @@ class AddNewEntity extends React.Component {
                     </button>
                 </div>
                 <h2 className="text-center mb-5">Add New Entity</h2>
+                <ToastContainer/>
             </div>
         )
     }

@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import axios from "axios";
 import {URL} from "../utils/contants";
 import Navbar from "./Navbar";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class AttributeEdit extends Component {
     constructor(props) {
@@ -20,48 +22,72 @@ class AttributeEdit extends Component {
     componentDidMount() {
         this.loadFieldData();
         this.loadEntitiesForProject();
-
     }
+
+    /*
+    This function loads the entities for the project
+     */
     loadEntitiesForProject = async () => {
         try {
             let entities = await axios.get(URL + "/entity");
             if(entities) {
-                this.setState({
-                    DummyEntities : entities.data
-                });
+                this.setState({DummyEntities : entities.data});
                 this.getFieldForEntity(entities.data[0]._id)
             }
+        } catch (e) {
+            toast("Connection error");
+        }
+    };
 
-        }
-        catch (e) {
-            console.log("the error", e)
-        }
-    };
+    /*
+    This function is used to save the updations made to the field
+     */
     save = async () => {
-        let updatedField = await axios.put(URL + '/entity/'+this.props.match.params.entityId+'/field/'+ this.props.match.params.fieldId,{
-            name: this.state.name,
-            type: this.state.type,
-            label: this.state.label
-        })
+        try{
+            let updatedField = await axios.put(URL + '/entity/'+this.props.match.params.entityId+'/field/'+ this.props.match.params.fieldId,{
+                name: this.state.name,
+                type: this.state.type,
+                label: this.state.label
+            });
+            if(updatedField) {
+                toast("Saved Successfully");
+            }
+        }catch (e) {
+            toast("Connection error");
+        }
     };
+
+    /*
+    This function is used to load the field information for a field.
+     */
     loadFieldData = async () => {
         try {
             let field = await axios.get(URL + '/entity/' + this.props.match.params.entityId+ '/field/' + this.props.match.params.fieldId);
             if(field) {
-                console.log('the fields is ', field)
                 this.setState({...this.state,...field.data[0]});
             }
         } catch (e) {
-            console.log('Cannot get entity', e)
+            toast("Connection error");
         }
     };
-     handleChangeDataType = (e) => {
-        console.log('the handleChangeDataType', e)
+
+    /*
+    Event handler for change in datatype.
+     */
+    handleChangeDataType = (e) => {
         this.setState({type: e.target.value });
     };
+
+    /*
+    Event handler for change in entity.
+    */
     handleChangeEntity = async (e) => {
         this.getFieldForEntity(e.target.value)
     };
+
+    /*
+    This function gets the fields for the entity
+     */
     getFieldForEntity = async (id) => {
         try {
             let fields = await axios.get(URL + '/entity/' + id+ '/field/' );
@@ -69,11 +95,10 @@ class AttributeEdit extends Component {
                 this.setState({DummyFields: fields.data});
             }
         } catch (e) {
-            console.log('Cannot get entity', e)
+            toast("Connection error");
         }
     };
     render() {
-        console.log('the state is', this.state);
         return (
             <div className="container my-5 card p-5">
                 <Navbar/>
@@ -147,6 +172,7 @@ class AttributeEdit extends Component {
                                 className="btn btn-block btn-outline-success">Save</button>
                     </div>
                 </div>
+                <ToastContainer />
             </div>
         );
     }

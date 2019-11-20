@@ -3,6 +3,8 @@ import AttributeEdit from "./AttributeEdit";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import { URL } from '../utils/contants'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Head = () => {
     return (
@@ -36,9 +38,8 @@ class EnitityEditAttributes extends React.Component {
             if(fields) {
                 this.setState({fields: fields.data})
             }
-        }
-        catch (e) {
-            console.log('Cannot get entity', e)
+        } catch (e) {
+            toast("Connection error");
         }
     };
     addField = async () => {
@@ -54,9 +55,8 @@ class EnitityEditAttributes extends React.Component {
             if(newField) {
                 this.loadFields()
             }
-        }
-        catch (e) {
-            console.log('Cannot get entity', e)
+        } catch (e) {
+            toast("Connection error");
         }
         this.props.addNewAttribute()
     };
@@ -69,7 +69,7 @@ class EnitityEditAttributes extends React.Component {
             }
         }
         catch (e) {
-            console.log('Cannot get entity', e)
+            toast("Connection error");
         }
     };
     render() {
@@ -126,9 +126,10 @@ class EnitityEditAttributes extends React.Component {
                             className="btn btn-block btn-outline-success">Save</button>
                     </div>
                 </div>
+                <ToastContainer/>
             </div>
         )
     }
-};
+}
 
 export default EnitityEditAttributes;
