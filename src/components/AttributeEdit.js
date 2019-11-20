@@ -13,13 +13,30 @@ class AttributeEdit extends Component {
             enumeration: '',
             dataTypes: ['Text', 'Number', 'Decimal', 'Date',
                 'DateTime', 'Boolean', 'Enumeration', 'Relation (One)', 'Relation (Many)'],
-            DummyEntities: ['Movies', 'Actors', 'Library', 'Books'],
-            DummyFields: ['Id','Name', 'Age', 'Date Of Birth']
+            DummyEntities: [],
+            DummyFields: []
         }
     }
     componentDidMount() {
         this.loadFieldData();
+        this.loadEntitiesForProject();
+
     }
+    loadEntitiesForProject = async () => {
+        try {
+            let entities = await axios.get(URL + "/entity");
+            if(entities) {
+                this.setState({
+                    DummyEntities : entities.data
+                });
+                this.getFieldForEntity(entities.data[0]._id)
+            }
+
+        }
+        catch (e) {
+            console.log("the error", e)
+        }
+    };
     save = async () => {
         let updatedField = await axios.put(URL + '/entity/'+this.props.match.params.entityId+'/field/'+ this.props.match.params.fieldId,{
             name: this.state.name,
@@ -41,6 +58,19 @@ class AttributeEdit extends Component {
      handleChangeDataType = (e) => {
         console.log('the handleChangeDataType', e)
         this.setState({type: e.target.value });
+    };
+    handleChangeEntity = async (e) => {
+        this.getFieldForEntity(e.target.value)
+    };
+    getFieldForEntity = async (id) => {
+        try {
+            let fields = await axios.get(URL + '/entity/' + id+ '/field/' );
+            if(fields) {
+                this.setState({DummyFields: fields.data});
+            }
+        } catch (e) {
+            console.log('Cannot get entity', e)
+        }
     };
     render() {
         console.log('the state is', this.state);
@@ -74,9 +104,10 @@ class AttributeEdit extends Component {
                     <label htmlFor="type" className={'mt-3'}>Relation Entity</label>
                     <div className="dropdown">
                         <select className="custom-select"
+                                onChange={this.handleChangeEntity}
                                 id="inputGroupSelect04">
                             {this.state.DummyEntities.map((v, ind) =>
-                                <option key={ind} value={v}>{v}</option>
+                                <option key={ind} value={v._id}>{v.name}</option>
                             )}
                         </select>
                     </div>
@@ -88,7 +119,7 @@ class AttributeEdit extends Component {
                         <select className="custom-select"
                                 id="inputGroupSelect04">
                             {this.state.DummyFields.map((v, ind) =>
-                                <option key={ind} value={v}>{v}</option>
+                                <option key={ind} value={v.name}>{v.name}</option>
                             )}
                         </select>
                     </div>
