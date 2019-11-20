@@ -9,7 +9,8 @@ class Projects extends Component {
         super(props);
         this.state = {
             userId: props.userId,
-            projects: []
+            projects: [],
+            inputValue: ''
         };
         this.getProjectsForUser(this.state.userId)
     }
@@ -21,7 +22,8 @@ class Projects extends Component {
                         res.data.map(project => projectsList.push({id: project._id, name: project.projectName}));
                         if(projectsList) {
                             this.setState({
-                                projects: projectsList
+                                projects: projectsList,
+                                inputValue: ''
                             });
                         }
                     });
@@ -32,8 +34,15 @@ class Projects extends Component {
     };
 
     addNewProject = async() => {
+        let projectName = "";
+        if(this.state.inputValue){
+            projectName = this.state.inputValue
+        }
+        else {
+            projectName = "Default Project"
+        }
         const defaultProject = {
-            "projectName": "Default Project"
+            "projectName": projectName
         };
         try{
             createProjectForUser(this.state.userId, defaultProject).then((res) => {
@@ -63,16 +72,39 @@ class Projects extends Component {
         }
     };
 
+    updateInputValue = (e) => {
+        this.setState({
+            inputValue: e.target.value
+        })
+    };
+
     render() {
         return (
             <div>
                 <Navbar/>
-                <div className="list-group mx-4 my-4">
-                    <button type="button"
-                            className="btn btn-outline-primary my-2"
-                            onClick={this.addNewProject}
-                    >Add New Project
-                    </button>
+                <div className="list-group mx-4" style={{"marginTop":"3rem"}}>
+                    {/*<button type="button"*/}
+                    {/*        className="btn btn-outline-primary my-2"*/}
+                    {/*        onClick={this.addNewProject}*/}
+                    {/*>Add New Project*/}
+                    {/*</button>*/}
+                    <div className="input-group mb-3 border border-secondary rounded">
+                        <input type="text"
+                               className="form-control"
+                               placeholder="Enter Project Name"
+                               aria-label="Project Name"
+                               aria-describedby="basic-addon2"
+                               value={this.state.inputValue}
+                               onChange={this.updateInputValue}
+                        />
+                            <div className="input-group-append">
+                                <button className="btn btn-outline-secondary"
+                                        type="button"
+                                        onClick={this.addNewProject}>
+                                    <i className="fa fa-plus"/>
+                                </button>
+                            </div>
+                    </div>
                     {this.state.projects.map(project =>
                         <a href="#"
                            className="list-group-item list-group-item-action"
