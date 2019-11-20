@@ -16,7 +16,9 @@ class AttributeEdit extends Component {
             dataTypes: ['Text', 'Number', 'Decimal', 'Date',
                 'DateTime', 'Boolean', 'Enumeration', 'Relation (One)', 'Relation (Many)'],
             DummyEntities: [],
-            DummyFields: []
+            DummyFields: [],
+            validations: ['Required', 'Not Required'],
+            selectedValidation: 'Required'
         }
     }
     componentDidMount() {
@@ -31,8 +33,9 @@ class AttributeEdit extends Component {
         try {
             let entities = await axios.get(URL + "/entity");
             if(entities) {
-                this.setState({DummyEntities : entities.data});
-                this.getFieldForEntity(entities.data[0]._id)
+                console.log('the enitutues are', entities,this.props.match.params.entityId)
+                this.setState({DummyEntities : entities.data.filter((v) => v._id !== this.props.match.params.entityId)});
+                this.getFieldForEntity(this.state.DummyEntities[0]._id)
             }
         } catch (e) {
             toast("Connection error");
@@ -47,7 +50,8 @@ class AttributeEdit extends Component {
             let updatedField = await axios.put(URL + '/entity/'+this.props.match.params.entityId+'/field/'+ this.props.match.params.fieldId,{
                 name: this.state.name,
                 type: this.state.type,
-                label: this.state.label
+                label: this.state.label,
+                validation: this.state.selectedValidation
             });
             if(updatedField) {
                 toast("Saved Successfully");
@@ -98,6 +102,11 @@ class AttributeEdit extends Component {
             toast("Connection error");
         }
     };
+
+    handleChangeValidation = (e) => {
+        this.setState({selectedValidation: e.target.value})
+    };
+
     render() {
         return (
             <div className="container my-5 card p-5">
@@ -113,6 +122,17 @@ class AttributeEdit extends Component {
                        id="label" placeholder="Label"
                        value={this.state.label}
                        onChange={(e) => this.setState({label: e.target.value})}/>
+                <label htmlFor="validation" className={'mt-3'}>Validations</label>
+                <div className="dropdown">
+                    <select className="custom-select"
+                            value={this.state.selectedValidation}
+                            onChange={this.handleChangeValidation}
+                            id="inputGroupSelect04">
+                        {this.state.validations.map((v, ind) =>
+                            <option key={ind} value={v}>{v}</option>
+                        )}
+                    </select>
+                </div>
                 <label htmlFor="type" className={'mt-3'}>Type</label>
                 <div className="dropdown">
                     <select className="custom-select"
