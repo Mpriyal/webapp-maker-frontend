@@ -36,6 +36,7 @@ class EnitityEditAttributes extends React.Component {
         try {
             let fields = await axios.get(URL + '/entity/' + this.props.entityId+ '/field');
             if(fields) {
+                console.log(fields)
                 this.setState({fields: fields.data})
             }
         } catch (e) {
@@ -47,6 +48,8 @@ class EnitityEditAttributes extends React.Component {
             "name" : "Default",
             "label" : "Default",
             "type": "Text",
+            "validation": "Required",
+            "enumerations": null,
             "entityId" : this.props.entityId
         };
 
@@ -85,12 +88,7 @@ class EnitityEditAttributes extends React.Component {
                             <th scope="row">{index + 1}</th>
                             <td>{v.name}</td>
                             <td>{v.type}</td>
-                            <td>
-                                Required
-                                {/*{v.validations.map((validation, i) => (*/}
-                                {/*<p key={i}>{validation.name}</p>*/}
-                                {/*))}*/}
-                            </td>
+                            <td>{v.validation}</td>
                             <td>
                                 <div className="row">
                                     <div className='col-6'>

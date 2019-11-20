@@ -12,7 +12,7 @@ class AttributeEdit extends Component {
             name: '',
             type: '',
             label: '',
-            enumeration: '',
+            enumerations: '',
             dataTypes: ['Text', 'Number', 'Decimal', 'Date',
                 'DateTime', 'Boolean', 'Enumeration', 'Relation (One)', 'Relation (Many)'],
             DummyEntities: [],
@@ -51,7 +51,8 @@ class AttributeEdit extends Component {
                 name: this.state.name,
                 type: this.state.type,
                 label: this.state.label,
-                validation: this.state.selectedValidation
+                validation: this.state.selectedValidation,
+                enumerations: this.state.enumerations !== '' ? this.state.enumerations : null
             });
             if(updatedField) {
                 toast("Saved Successfully");
@@ -174,8 +175,8 @@ class AttributeEdit extends Component {
                     <label htmlFor="type" className={'mt-3'}>List the enumerations (Comma separated)</label>
                     <input type="text" className="form-control"
                            id="enumeration"
-                           value={this.state.enumeration}
-                           onChange={(e) => this.setState({enumeration: e.target.value})}/>
+                           value={this.state.enumerations}
+                           onChange={(e) => this.setState({enumerations: e.target.value})}/>
                 </div>}
                 <div className='row mt-3'>
                     <div className='col-6'>
