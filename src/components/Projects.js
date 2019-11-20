@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Navbar from "./Navbar";
 import {getprojectsForUser} from "../Services/userService";
 import {createProjectForUser} from "../Services/projectService";
+import {deleteProject} from "../Services/projectService";
 
 class Projects extends Component {
     constructor(props) {
@@ -48,6 +49,20 @@ class Projects extends Component {
 
     };
 
+    deleteProject = async(projectId) => {
+        try {
+            deleteProject(this.state.userId,projectId).then((res) => {
+                let deletedProject = res.data;
+                if(deletedProject){
+                    this.getProjectsForUser(this.state.userId)
+                }
+            });
+        }
+        catch (e) {
+            console.log('Cannot delete project', e)
+        }
+    };
+
     render() {
         return (
             <div>
@@ -63,6 +78,11 @@ class Projects extends Component {
                            className="list-group-item list-group-item-action"
                            key={project.id}
                         >{project.name}
+                            <div className='col-6' style={{"display":"inline"}}>
+                                <i onClick={() => this.deleteProject(project.id)}
+                                   className="fa fa-trash"
+                                   style={{"float":"right"}}/>
+                            </div>
                         </a>
                     )}
                 </div>

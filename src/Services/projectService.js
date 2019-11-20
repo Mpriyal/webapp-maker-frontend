@@ -6,4 +6,8 @@ const createProjectForUser = async (userId, project) => {
     return projectRes
 };
 
-export {createProjectForUser}
+const deleteProject = async (userId, projectId) => {
+    return axios.delete(API_URL + 'api/user/' + userId + '/project/' + projectId);
+};
+
+export {createProjectForUser, deleteProject}
