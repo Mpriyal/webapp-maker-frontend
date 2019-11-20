@@ -1,36 +1,71 @@
 import React, {Component} from 'react';
 import Navbar from "./Navbar";
 import {getprojectsForUser} from "../Services/userService";
+import {createProjectForUser} from "../Services/projectService";
 
 class Projects extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            n: [{id: 1, name: 'Project 1 '},{id: 2, name: 'Project 2 '},{id: 3, name: 'Project 3 '} ],
+            userId: props.userId,
             projects: []
         };
-        this.getProjectsForUser(this.props.userId)
+        this.getProjectsForUser(this.state.userId)
     }
 
-    getProjectsForUser = (userId) => {
-        getprojectsForUser(userId).then((res) => {
-            let projectsList = [];
-            res.data.map(project => projectsList.push({id: project._id, name: project.projectName}));
-            this.setState({
-                projects: projectsList
+    getProjectsForUser = async(userId) => {
+        try{
+            getprojectsForUser(userId).then((res) => {
+                        let projectsList = [];
+                        res.data.map(project => projectsList.push({id: project._id, name: project.projectName}));
+                        if(projectsList) {
+                            this.setState({
+                                projects: projectsList
+                            });
+                        }
+                    });
+        }
+        catch (e) {
+            console.log('Cannot get projects for this user', e)
+        }
+    };
+
+    addNewProject = async() => {
+        const defaultProject = {
+            "projectName": "Default Project"
+        };
+        try{
+            createProjectForUser(this.state.userId, defaultProject).then((res) => {
+                let newProject = res.data;
+                if(newProject){
+                    this.getProjectsForUser(this.state.userId)
+                }
             });
-        });
-        return this.state.projects;
+        }
+        catch (e) {
+            console.log('Cannot create new project',e)
+        }
+
     };
 
     render() {
         return (
             <div>
                 <Navbar/>
-                <h1>Hey there</h1>
-                {this.state.projects.map(v => (
-                    <li key={v.id}>{v.name}</li>
-                ))}
+                <div className="list-group mx-4 my-4">
+                    <button type="button"
+                            className="btn btn-outline-primary my-2"
+                            onClick={this.addNewProject}
+                    >Add New Project
+                    </button>
+                    {this.state.projects.map(project =>
+                        <a href="#"
+                           className="list-group-item list-group-item-action"
+                           key={project.id}
+                        >{project.name}
+                        </a>
+                    )}
+                </div>
             </div>
         );
     }
