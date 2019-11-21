@@ -33,7 +33,7 @@ class AttributeEdit extends Component {
         try {
             let entities = await axios.get(URL + "/entity");
             if(entities) {
-                console.log('the enitutues are', entities,this.props.match.params.entityId)
+                console.log('the entities are', entities);
                 this.setState({DummyEntities : entities.data.filter((v) => v._id !== this.props.match.params.entityId)});
                 this.getFieldForEntity(this.state.DummyEntities[0]._id)
             }

@@ -15,26 +15,8 @@ export default class EditEntity extends Component {
             fields: [],
             entity: {
                 id: 1,
-                name: 'Movies',
-                attributes: [{
-                    id: 123,
-                    name: 'Id',
-                    type: 'NUMBER',
-                    validations: [{
-                        name: 'required',
-                        required: true,
-                        min_length: 2,
-                        max_length: 100
-                    }]
-                }, {
-                    id: 234,
-                    name: 'Name',
-                    type: 'VARCHAR',
-                    validations: [{
-                        name: 'not required',
-                        required: false
-                    }]
-                }]
+                name: '',
+                attributes: []
             }
         }
     }
@@ -69,8 +51,8 @@ export default class EditEntity extends Component {
                 max_length: 100
             }]
         };
-        newAttributes.push(dummyAttribute)
-        newentity.attributes = newAttributes
+        newAttributes.push(dummyAttribute);
+        newentity.attributes = newAttributes;
         this.setState({entity: newentity})
     };
     save = () => {
@@ -106,6 +88,7 @@ export default class EditEntity extends Component {
                     <EntityEditBasic entity={this.state.entity1} onNameChange={(e) => this.OnNameChange(e)} onLabelChange={(e) => this.onLabelChange(e)}  />}
                     {this.state.role === 'attributes' && this.state.fields &&
                     <EntityEditAttributes
+                        projectId ={this.props.match.params.editId}
                         fields={this.state.fields}
                         entityId={this.state.entity1._id}
                         addNewAttribute={this.addNewAttribute}

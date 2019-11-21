@@ -21,7 +21,7 @@ export default class Entity extends Component {
 
     rerenderEntities = async ()=> {
         try {
-            let entities = await axios.get(URL + "/entity");
+            let entities = await axios.get( "http://localhost:4000/api/user/5dc1ffd0e8bcb8621c4eab6b/project/"+this.props.match.params.projectId+"/entity");
             if(entities) {
                 this.setState({
                     entities : entities.data
@@ -40,10 +40,10 @@ export default class Entity extends Component {
                 <h1>Entities</h1>
                 <div className={'row'}>
                     {this.state.entities.map((entity) => (
-                        <EntityItem relation={entity} key={entity._id} rerenderEntities={this.rerenderEntities}/>
+                        <EntityItem projectId={this.props.match.params.projectId} relation={entity} key={entity._id} rerenderEntities={this.rerenderEntities}/>
                     ))}
                     <div className= 'col-3 my-3'>
-                        <AddNewEntity refreshEntities={this.rerenderEntities} />
+                        <AddNewEntity refreshEntities={this.rerenderEntities} projectId={this.props.match.params.projectId}/>
                     </div>
                 </div>
                 <ToastContainer/>

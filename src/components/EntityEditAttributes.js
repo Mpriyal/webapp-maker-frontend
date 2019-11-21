@@ -92,7 +92,7 @@ class EnitityEditAttributes extends React.Component {
                             <td>
                                 <div className="row">
                                     <div className='col-6'>
-                                        <Link to={`/entity/${this.props.entityId}/field/${v._id}/edit`}>
+                                        <Link to={`/project/${this.props.projectId}/entity/${this.props.entityId}/field/${v._id}/edit`}>
                                             <i className="fa fa-edit"
                                                onClick={() => this.setState({editing : !this.state.editing, entity: v})}/>
                                         </Link>

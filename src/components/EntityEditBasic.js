@@ -43,7 +43,7 @@ class EntityEditBasic extends React.Component {
 
                 <div className='row mt-4'>
                     <div className='col-6'>
-                        <Link to='/entity'>
+                        <Link to='/'>
                             <button
                                 type="button"
                                 className="btn btn-block btn-outline-secondary">

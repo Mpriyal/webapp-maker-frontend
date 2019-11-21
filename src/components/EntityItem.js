@@ -45,7 +45,7 @@ class EntityItem extends React.Component{
                 <div className="card-body">
                 <span className={'row'}>
                     <h2 className="card-title my-3 col-4">{this.props.relation.name}</h2>
-                    <Link to={`/entity/${this.props.relation._id}/edit`} className='col-3 my-3'>
+                    <Link to={`/project/${this.props.projectId}/entity/${this.props.relation._id}/edit`} className='col-3 my-3'>
                         <button type="button" className="btn btn-block btn-outline-primary">Edit</button>
                     </Link>
                     <button type="button"

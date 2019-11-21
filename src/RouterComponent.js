@@ -11,12 +11,11 @@ const RouterComponent = () =>{
     return (
         <Router>
             <Route exact path='/' component={Home}/>
-            <Route exact path='/entity' component={Entity}/>
-            <Route exact path='/entity/:editId/edit' component={EditEntity}/>
-            <Route exact path='/entity/:entityId/field/:fieldId/edit' component={AttributeEdit}/>
+            <Route exact path='/project/:projectId/entity' component={Entity}/>
+            <Route exact path='/project/:projectId/entity/:editId/edit' component={EditEntity}/>
+            <Route exact path='/project/:projectId/entity/:entityId/field/:fieldId/edit' component={AttributeEdit}/>
             <Route path='/login' component={Login}/>
             <Route path='/register' component={Register}/>
-            <Route path='/new' component={EditEntity}/>
         </Router>
     )
 };

@@ -1,6 +1,5 @@
 import React from 'react'
 import axios from 'axios'
-import {URL} from "../utils/contants";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -8,11 +7,10 @@ class AddNewEntity extends React.Component {
     addEntity = async () => {
         const defaultEntity = {
             "name" : "Default",
-            "label" : "Default Label",
-            "projectId" : "5dd1b7197175cb72dcd16bb8"
+            "label" : "Default Label"
         };
         try {
-            let newEntity = await axios.post(URL + '/entity', defaultEntity)
+            let newEntity = await axios.post('http://localhost:4000/api/user/5dc1ffd0e8bcb8621c4eab6b/project/'+this.props.projectId+ '/entity', defaultEntity)
             if (newEntity){
                 this.props.refreshEntities()
             }

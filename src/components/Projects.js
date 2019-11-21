@@ -4,6 +4,7 @@ import {getprojectsForUser} from "../Services/userService";
 import {createProjectForUser} from "../Services/projectService";
 import {deleteProject} from "../Services/projectService";
 import {updateProject} from "../Services/projectService";
+import {Link} from 'react-router-dom'
 
 class Projects extends Component {
     constructor(props) {
@@ -140,7 +141,7 @@ class Projects extends Component {
                         </div>
                     </div>
                     {this.state.projects.map(project =>
-                        <a href="#"
+                        <Link to={'/project/'+project.id+'/entity'}
                            className="list-group-item list-group-item-action"
                            key={project.id}
                         >{project.name}
@@ -154,7 +155,7 @@ class Projects extends Component {
                                    className="fa fa-edit px-2"
                                    style={{"float":"right","paddingTop":"1px"}}/>
                             </div>
-                        </a>
+                        </Link>
                     )}
                 </div>
             </div>

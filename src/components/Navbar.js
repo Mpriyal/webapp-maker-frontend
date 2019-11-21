@@ -53,11 +53,6 @@ class Navbar extends React.Component {
                     <span className="navbar-toggler-icon"/>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div className="navbar-nav">
-                        <Link className="nav-item nav-link" to="/entity">
-                            Entities
-                        </Link>
-                    </div>
                     <div className="navbar-nav ml-auto">
                         {this.state.loggedIn && this.state.user.firstName &&
                         <p className={'mx-4 text-white mt-3'}>{this.state.user.firstName} {this.state.user.lastName}</p>}
