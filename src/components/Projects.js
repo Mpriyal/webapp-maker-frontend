@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import {getprojectsForUser} from "../Services/userService";
 import {createProjectForUser} from "../Services/projectService";
 import {deleteProject} from "../Services/projectService";
+import {updateProject} from "../Services/projectService";
 
 class Projects extends Component {
     constructor(props) {
@@ -10,7 +11,8 @@ class Projects extends Component {
         this.state = {
             userId: props.userId,
             projects: [],
-            inputValue: ''
+            inputValue: '',
+            editingProject: null
         };
         this.getProjectsForUser(this.state.userId)
     }
@@ -72,6 +74,31 @@ class Projects extends Component {
         }
     };
 
+    updateCurrentProject = async() => {
+        if(this.state.editingProject.name !== this.state.inputValue && this.state.inputValue !== '') {
+            const project = {
+                "projectName": this.state.inputValue
+            };
+            try {
+                updateProject(this.state.userId, this.state.editingProject.id, project).then((res) => {
+                    let updatedProject = res.data;
+                    if (updatedProject) {
+                        this.getProjectsForUser(this.state.userId)
+                    }
+                });
+            } catch (e) {
+                console.log('Cannot update project', e)
+            }
+        }
+    };
+
+    editProjectName = async(project) => {
+        this.setState({
+            inputValue : project.name,
+            editingProject: project
+        })
+    };
+
     updateInputValue = (e) => {
         this.setState({
             inputValue: e.target.value
@@ -104,6 +131,13 @@ class Projects extends Component {
                                     <i className="fa fa-plus"/>
                                 </button>
                             </div>
+                        <div className="input-group-append">
+                            <button className="btn btn-outline-secondary"
+                                    type="button"
+                                    onClick={this.updateCurrentProject}>
+                                <i className="fa fa-check"/>
+                            </button>
+                        </div>
                     </div>
                     {this.state.projects.map(project =>
                         <a href="#"
@@ -114,6 +148,11 @@ class Projects extends Component {
                                 <i onClick={() => this.deleteProject(project.id)}
                                    className="fa fa-trash"
                                    style={{"float":"right"}}/>
+                            </div>
+                            <div className='col-6' style={{"display":"inline"}}>
+                                <i onClick={() => this.editProjectName(project)}
+                                   className="fa fa-edit px-2"
+                                   style={{"float":"right","paddingTop":"1px"}}/>
                             </div>
                         </a>
                     )}
