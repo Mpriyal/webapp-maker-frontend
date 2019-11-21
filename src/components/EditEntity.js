@@ -85,7 +85,11 @@ export default class EditEntity extends Component {
                         </li>
                     </ul>
                     {this.state.role === 'basic' && this.state.entity1.name && this.state.entity1.label &&
-                    <EntityEditBasic entity={this.state.entity1} onNameChange={(e) => this.OnNameChange(e)} onLabelChange={(e) => this.onLabelChange(e)}  />}
+                    <EntityEditBasic
+                        projectId ={this.props.match.params.projectId}
+                        entity={this.state.entity1}
+                        onNameChange={(e) => this.OnNameChange(e)}
+                        onLabelChange={(e) => this.onLabelChange(e)}  />}
                     {this.state.role === 'attributes' && this.state.fields &&
                     <EntityEditAttributes
                         projectId ={this.props.match.params.projectId}

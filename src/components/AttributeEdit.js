@@ -14,11 +14,15 @@ class AttributeEdit extends Component {
             label: '',
             enumerations: '',
             dataTypes: ['Text', 'Number', 'Decimal', 'Date',
-                'DateTime', 'Boolean', 'Enumeration', 'Relation (One)', 'Relation (Many)'],
+                'DateTime', 'Boolean', 'Enumeration', 'Relation'],
             DummyEntities: [],
+            relationship: ['OneToMany','ManyToOne', 'ManyToMany', 'OneToOne'],
             DummyFields: [],
             validations: ['Required', 'Not Required'],
-            selectedValidation: 'Required'
+            selectedValidation: 'Required',
+            relation: '',
+            relationEntity: '',
+            relationField: ''
         }
     }
     componentDidMount() {
@@ -52,7 +56,11 @@ class AttributeEdit extends Component {
                 type: this.state.type,
                 label: this.state.label,
                 validation: this.state.selectedValidation,
-                enumerations: this.state.enumerations !== '' ? this.state.enumerations : null
+                enumerations: this.state.enumerations !== '' ? this.state.enumerations : null,
+                relation: this.state.relation !== '' ? this.state.relation : null,
+                relationEntity: this.state.relationEntity!== '' ? this.state.relationEntity : null,
+                relationField: this.state.relationField!== '' ? this.state.relationField : null,
+
             });
             if(updatedField) {
                 toast("Saved Successfully");
@@ -69,6 +77,7 @@ class AttributeEdit extends Component {
         try {
             let field = await axios.get(URL + '/entity/' + this.props.match.params.entityId+ '/field/' + this.props.match.params.fieldId);
             if(field) {
+                console.log('the field is the ', field);
                 this.setState({...this.state,...field.data[0]});
             }
         } catch (e) {
@@ -87,6 +96,7 @@ class AttributeEdit extends Component {
     Event handler for change in entity.
     */
     handleChangeEntity = async (e) => {
+        this.setState({relationEntity: e.target.value});
         this.getFieldForEntity(e.target.value)
     };
 
@@ -107,7 +117,12 @@ class AttributeEdit extends Component {
     handleChangeValidation = (e) => {
         this.setState({selectedValidation: e.target.value})
     };
-
+    handleChangeType = (e) => {
+        this.setState({relation: e.target.value})
+    };
+    handleChangeField = (e) => {
+        this.setState({relationField: e.target.value})
+    };
     render() {
         return (
             <div className="container my-5 card p-5">
@@ -145,11 +160,26 @@ class AttributeEdit extends Component {
                         )}
                     </select>
                 </div>
-                {(this.state.type === 'Relation (One)' || this.state.type === 'Relation (Many)')
+                {(this.state.type === 'Relation')
+                && <div>
+                    <label htmlFor="type" className={'mt-3'}>Relation Type</label>
+                    <div className="dropdown">
+                        <select className="custom-select"
+                                value={this.state.relation}
+                                onChange={this.handleChangeType}
+                                id="inputGroupSelect04">
+                            {this.state.relationship.map((v, ind) =>
+                                <option key={ind} value={v}>{v}</option>
+                            )}
+                        </select>
+                    </div>
+                </div>}
+                {(this.state.type === 'Relation')
                 && <div>
                     <label htmlFor="type" className={'mt-3'}>Relation Entity</label>
                     <div className="dropdown">
                         <select className="custom-select"
+                                value={this.state.relationEntity}
                                 onChange={this.handleChangeEntity}
                                 id="inputGroupSelect04">
                             {this.state.DummyEntities.map((v, ind) =>
@@ -158,14 +188,16 @@ class AttributeEdit extends Component {
                         </select>
                     </div>
                 </div>}
-                {(this.state.type === 'Relation (One)' || this.state.type === 'Relation (Many)')
+                {(this.state.type === 'Relation')
                 && <div>
                     <label htmlFor="type" className={'mt-3'}>Relation Field</label>
                     <div className="dropdown">
                         <select className="custom-select"
+                                value={this.state.relationField}
+                                onChange={this.handleChangeField}
                                 id="inputGroupSelect04">
                             {this.state.DummyFields.map((v, ind) =>
-                                <option key={ind} value={v.name}>{v.name}</option>
+                                <option key={ind} value={v._id}>{v.name}</option>
                             )}
                         </select>
                     </div>
