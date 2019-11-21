@@ -88,7 +88,7 @@ export default class EditEntity extends Component {
                     <EntityEditBasic entity={this.state.entity1} onNameChange={(e) => this.OnNameChange(e)} onLabelChange={(e) => this.onLabelChange(e)}  />}
                     {this.state.role === 'attributes' && this.state.fields &&
                     <EntityEditAttributes
-                        projectId ={this.props.match.params.editId}
+                        projectId ={this.props.match.params.projectId}
                         fields={this.state.fields}
                         entityId={this.state.entity1._id}
                         addNewAttribute={this.addNewAttribute}
