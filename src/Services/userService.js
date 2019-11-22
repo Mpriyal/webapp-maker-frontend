@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://localhost:4000/";
+const API_URL = "https://webapp-maker-neu.herokuapp.com/";
 
 const registerUser = async (userData) => {
    return axios.post(API_URL + 'api/register', userData, {withCredentials: true, credentials: 'include'});
