@@ -1,6 +1,7 @@
 /**
  * This is the sample canonical form.
  */
+const DEV_URL = 'http://localhost:4000/api';
 const URL = 'http://localhost:4000/api/user/5dc1ffd0e8bcb8621c4eab6b/project/5dd1b7197175cb72dcd16bb8';
 const canonical = {
     project_id: 123,
@@ -99,4 +100,4 @@ const canonical = {
     meta: []
 };
 
-export { canonical, URL };
+export { canonical, URL, DEV_URL };

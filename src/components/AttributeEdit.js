@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import {URL} from "../utils/contants";
+import {DEV_URL, URL} from "../utils/contants";
 import Navbar from "./Navbar";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -36,7 +36,7 @@ class AttributeEdit extends Component {
      */
     loadEntitiesForProject = async () => {
         try {
-            let entities = await axios.get("http://localhost:4000/api/user/"+this.props.user._id+"/project/"+ this.props.match.params.projectId+ "/entity");
+            let entities = await axios.get(DEV_URL + "/user/"+this.props.user._id+"/project/"+ this.props.match.params.projectId+ "/entity");
             if(entities) {
                 this.setState({DummyEntities : entities.data.filter((v) => v._id !== this.props.match.params.entityId)});
                 this.getFieldForEntity(this.state.DummyEntities[0]._id)
@@ -45,7 +45,6 @@ class AttributeEdit extends Component {
             toast("Connection error");
         }
     };
-
     /*
     This function is used to save the updations made to the field
      */
@@ -75,9 +74,8 @@ class AttributeEdit extends Component {
      */
     loadFieldData = async () => {
         try {
-            let field = await axios.get(URL + '/entity/' + this.props.match.params.entityId+ '/field/' + this.props.match.params.fieldId);
+            let field = await axios.get(DEV_URL + '/user/1/project/1/entity/' + this.props.match.params.entityId+ '/field/' + this.props.match.params.fieldId);
             if(field) {
-                console.log('the field is the ', field);
                 this.setState({...this.state,...field.data[0]});
             }
         } catch (e) {
@@ -105,7 +103,7 @@ class AttributeEdit extends Component {
      */
     getFieldForEntity = async (id) => {
         try {
-            let fields = await axios.get(URL + '/entity/' + id+ '/field/' );
+            let fields = await axios.get(DEV_URL + '/user/1/project/1/entity/' + id+ '/field/' );
             if(fields) {
                 this.setState({DummyFields: fields.data});
             }

@@ -25,7 +25,6 @@ class Projects extends Component {
         }
     }
     getProjectsForUser = async(userId) => {
-        console.log('get use',userId);
         try{
             getprojectsForUser(userId).then((res) => {
                 let projectsList = [];

@@ -36,7 +36,6 @@ class EnitityEditAttributes extends React.Component {
         try {
             let fields = await axios.get(URL + '/entity/' + this.props.entityId+ '/field');
             if(fields) {
-                console.log(fields)
                 this.setState({fields: fields.data})
             }
         } catch (e) {
@@ -54,7 +53,7 @@ class EnitityEditAttributes extends React.Component {
         };
 
         try {
-            let newField = await axios.post(URL + '/entity/' + this.props.entityId+ '/field',defaultField );
+            let newField = await axios.post(URL + '/user/1/project/1/entity/' + this.props.entityId+ '/field',defaultField );
             if(newField) {
                 this.loadFields()
             }
@@ -66,7 +65,7 @@ class EnitityEditAttributes extends React.Component {
     deleteField = async (fieldObj) => {
 
         try {
-            let field = await axios.delete(URL + '/entity/' + this.props.entityId+ '/field/' + fieldObj._id);
+            let field = await axios.delete(URL + '/user/1/project/1/entity/' + this.props.entityId+ '/field/' + fieldObj._id);
             if(field) {
                 this.loadFields()
             }

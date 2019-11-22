@@ -3,6 +3,7 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import connect from "react-redux/es/connect/connect";
+import {DEV_URL} from "../utils/contants";
 
 class AddNewEntity extends React.Component {
     addEntity = async () => {
@@ -11,7 +12,7 @@ class AddNewEntity extends React.Component {
             "label" : "Default Label"
         };
         try {
-            let newEntity = await axios.post('http://localhost:4000/api/user/'+this.props.user._id+'/project/'+this.props.projectId+ '/entity', defaultEntity)
+            let newEntity = await axios.post(DEV_URL + '/user/'+this.props.user._id+'/project/'+this.props.projectId+ '/entity', defaultEntity)
             if (newEntity){
                 this.props.refreshEntities()
             }

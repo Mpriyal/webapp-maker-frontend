@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import EntityItem from '../components/EntityItem'
-import { canonical, URL } from '../utils/contants'
+import { DEV_URL } from '../utils/contants'
 import AddNewEntity from '../components/AddNewEntity'
 import Navbar from "../components/Navbar";
 import axios from 'axios';
@@ -12,7 +12,6 @@ class Entity extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            canonical: canonical,
             entities: []
         }
     }
@@ -22,11 +21,9 @@ class Entity extends Component {
 
     rerenderEntities = async ()=> {
         try {
-            let entities = await axios.get( "http://localhost:4000/api/user/"+ this.props.user._id+"/project/"+this.props.match.params.projectId+"/entity");
+            let entities = await axios.get( DEV_URL + "/user/"+ this.props.user._id+"/project/"+this.props.match.params.projectId+"/entity");
             if(entities) {
-                this.setState({
-                    entities : entities.data
-                })
+                this.setState({entities : entities.data})
             }
         }
         catch (e) {

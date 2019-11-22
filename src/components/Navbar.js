@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import '../App.css'
 import axios from 'axios'
 import { connect } from 'react-redux';
+import {DEV_URL} from "../utils/contants";
 
 class Navbar extends React.Component {
     constructor(props) {
@@ -10,31 +11,9 @@ class Navbar extends React.Component {
         this.state = {loggedIn: false}
     }
 
-    componentDidMount() {
-        this.getCurrentUser()
-
-    }
-    componentDidUpdate(prevProps) {
-        if (this.props.loggedIn !== prevProps.loggedIn) {
-            this.getCurrentUser()
-        }
-    }
-    getCurrentUser = async () => {
-        try {
-            let currentUser = await axios.get('http://localhost:4000/api/profile',{withCredentials: true});
-            if(currentUser) {
-                console.log('the current ', currentUser)
-                if(currentUser.data.length > 0) {
-                    // this.setState({loggedIn: true, user: currentUser.data[0] });
-                }
-            }
-        }catch (e) {
-            console.log('the error is', e)
-        }
-    };
     logout = async () => {
         try {
-            let logoutButton = await axios.post('http://localhost:4000/api/logout',{withCredentials: true});
+            let logoutButton = await axios.post(DEV_URL + '/logout',{withCredentials: true});
             if(logoutButton) {
                 this.props.onLogout();
                 this.props.history.push('/');
