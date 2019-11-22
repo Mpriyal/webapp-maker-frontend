@@ -10,7 +10,7 @@ class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: '', lastName: '', email: '', password: '', confirmPassword: '', username: 'abc'
+            firstName: '', lastName: '', email: '', password: '', confirmPassword: '', username: '', phoneNo: ''
         }
     }
 
@@ -22,7 +22,7 @@ class Register extends Component {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,
-            phoneNo: 12345
+            phoneNo: this.state.phoneNo
         };
         try {
             const user = await registerUser(userData);
@@ -58,10 +58,20 @@ class Register extends Component {
                             </div>
                         </div>
                         <Input id='email'
-                               name= 'Last Name'
+                               name= 'Email Address'
                                placeholder = 'Email address'
                                type='email'
                                onChange={(e) => this.setState({email: e})} />
+                        <Input id='username'
+                               name= 'Username'
+                               placeholder = 'Username'
+                               type='text'
+                               onChange={(e) => this.setState({username: e})} />
+                        <Input id='phoneNo'
+                               name= 'Phone Number'
+                               placeholder = 'Phone Number'
+                               type='text'
+                               onChange={(e) => this.setState({phoneNo: e})} />
                         <Input id='password'
                                name= 'Password'
                                placeholder = 'Password'
