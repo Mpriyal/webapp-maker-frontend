@@ -18,15 +18,6 @@ const reducer = (state = initialState, action) => {
                 user: null
             }
         }
-        else{
-            if (action.type === 'PROFILE'){
-                return {
-                    ...state,
-                    loggedIn: false,
-                    user: null
-                }
-            }
-        }
     }
     return state
 };
