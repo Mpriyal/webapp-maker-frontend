@@ -35,6 +35,7 @@ class Navbar extends React.Component {
         try {
             let logoutButton = await axios.post('http://localhost:4000/api/logout',{withCredentials: true});
             if(logoutButton) {
+                localStorage.removeItem('userId');
                 this.setState({loggedIn: false});
                 this.props.history.push('/');
             }

@@ -10,26 +10,33 @@ class Projects extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userId: props.userId,
+            userId: '',
             projects: [],
             inputValue: '',
             editingProject: null
         };
-        this.getProjectsForUser(this.state.userId)
     }
-
+    componentDidMount() {
+        this.getProjectsForUser(this.props.userId)
+    }
+    componentDidUpdate(prevProps) {
+        if (this.props.userId !== prevProps.userId) {
+            this.getProjectsForUser(this.props.userId)
+        }
+    }
     getProjectsForUser = async(userId) => {
+        console.log('get use',userId);
         try{
             getprojectsForUser(userId).then((res) => {
-                        let projectsList = [];
-                        res.data.map(project => projectsList.push({id: project._id, name: project.projectName}));
-                        if(projectsList) {
-                            this.setState({
-                                projects: projectsList,
-                                inputValue: ''
-                            });
-                        }
+                let projectsList = [];
+                res.data.map(project => projectsList.push({id: project._id, name: project.projectName}));
+                if(projectsList) {
+                    this.setState({
+                        projects: projectsList,
+                        inputValue: ''
                     });
+                }
+            });
         }
         catch (e) {
             console.log('Cannot get projects for this user', e)
@@ -109,13 +116,15 @@ class Projects extends Component {
     render() {
         return (
             <div>
-                <Navbar/>
+                <Navbar history={this.props.history} logout={()=> this.getProjectsForUser(this.props.userId)}/>
                 <div className="list-group mx-4" style={{"marginTop":"3rem"}}>
                     {/*<button type="button"*/}
                     {/*        className="btn btn-outline-primary my-2"*/}
                     {/*        onClick={this.addNewProject}*/}
                     {/*>Add New Project*/}
                     {/*</button>*/}
+                    the {this.props.userId}
+
                     <div className="input-group mb-3 border border-secondary rounded">
                         <input type="text"
                                className="form-control"
@@ -125,13 +134,13 @@ class Projects extends Component {
                                value={this.state.inputValue}
                                onChange={this.updateInputValue}
                         />
-                            <div className="input-group-append">
-                                <button className="btn btn-outline-secondary"
-                                        type="button"
-                                        onClick={this.addNewProject}>
-                                    <i className="fa fa-plus"/>
-                                </button>
-                            </div>
+                        <div className="input-group-append">
+                            <button className="btn btn-outline-secondary"
+                                    type="button"
+                                    onClick={this.addNewProject}>
+                                <i className="fa fa-plus"/>
+                            </button>
+                        </div>
                         <div className="input-group-append">
                             <button className="btn btn-outline-secondary"
                                     type="button"
@@ -142,8 +151,8 @@ class Projects extends Component {
                     </div>
                     {this.state.projects.map(project =>
                         <Link to={'/project/'+project.id+'/entity'}
-                           className="list-group-item list-group-item-action"
-                           key={project.id}
+                              className="list-group-item list-group-item-action"
+                              key={project.id}
                         >{project.name}
                             <div className='col-6' style={{"display":"inline"}}>
                                 <i onClick={() => this.deleteProject(project.id)}

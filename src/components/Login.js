@@ -14,6 +14,7 @@ class Login extends React.Component {
         try {
             const user = await loginUser({email:this.state.email , password:this.state.password });
             if(user) {
+                localStorage.setItem('userId', user.data[0]._id);
                 this.setState({loggedIn: true});
                 this.props.history.push('/');
             }

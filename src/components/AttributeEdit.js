@@ -35,9 +35,9 @@ class AttributeEdit extends Component {
      */
     loadEntitiesForProject = async () => {
         try {
-            let entities = await axios.get("http://localhost:4000/api/user/5dc1ffd0e8bcb8621c4eab6b/project/"+ this.props.match.params.projectId+ "/entity");
+            let userId = localStorage.getItem('userId');
+            let entities = await axios.get("http://localhost:4000/api/user/"+userId+"/project/"+ this.props.match.params.projectId+ "/entity");
             if(entities) {
-                console.log('the entities are', entities);
                 this.setState({DummyEntities : entities.data.filter((v) => v._id !== this.props.match.params.entityId)});
                 this.getFieldForEntity(this.state.DummyEntities[0]._id)
             }

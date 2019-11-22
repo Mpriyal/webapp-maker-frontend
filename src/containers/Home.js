@@ -5,12 +5,18 @@ import Landing from "../components/Landing";
 export default class Home extends Component{
     constructor(props) {
         super(props);
+        let userId = localStorage.getItem('userId');
         this.state = {
-            isAuthenticated: true,
-            userId: "5dc512a400fa8a5439d64361"
+            isAuthenticated: userId ? true: false,
+            userId: userId
         }
     }
-
+    componentDidMount(){
+        console.log('the home component is mounted')
+    }
+    componentDidUpdate() {
+        console.log('the update is called');
+    }
     render() {
         return (
             <div className="home">
