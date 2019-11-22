@@ -5,6 +5,7 @@ import {createProjectForUser} from "../Services/projectService";
 import {deleteProject} from "../Services/projectService";
 import {updateProject} from "../Services/projectService";
 import {Link} from 'react-router-dom'
+import connect from "react-redux/es/connect/connect";
 
 class Projects extends Component {
     constructor(props) {
@@ -17,14 +18,16 @@ class Projects extends Component {
         };
     }
     componentDidMount() {
-        this.getProjectsForUser(this.props.userId)
+        this.getProjectsForUser(this.props.user._id)
     }
     componentDidUpdate(prevProps) {
         if (this.props.userId !== prevProps.userId) {
-            this.getProjectsForUser(this.props.userId)
+            this.getProjectsForUser(this.props.user._id)
         }
     }
     getProjectsForUser = async(userId) => {
+        console.log(userId)
+
         try{
             getprojectsForUser(userId).then((res) => {
                 let projectsList = [];
@@ -54,10 +57,10 @@ class Projects extends Component {
             "projectName": projectName
         };
         try{
-            createProjectForUser(this.state.userId, defaultProject).then((res) => {
+            createProjectForUser(this.props.user._id, defaultProject).then((res) => {
                 let newProject = res.data;
                 if(newProject){
-                    this.getProjectsForUser(this.state.userId)
+                    this.getProjectsForUser(this.props.user._id)
                 }
             });
         }
@@ -72,7 +75,7 @@ class Projects extends Component {
             deleteProject(this.state.userId,projectId).then((res) => {
                 let deletedProject = res.data;
                 if(deletedProject){
-                    this.getProjectsForUser(this.state.userId)
+                    this.getProjectsForUser(this.props.user._id)
                 }
             });
         }
@@ -90,7 +93,7 @@ class Projects extends Component {
                 updateProject(this.state.userId, this.state.editingProject.id, project).then((res) => {
                     let updatedProject = res.data;
                     if (updatedProject) {
-                        this.getProjectsForUser(this.state.userId)
+                        this.getProjectsForUser(this.props.user._id)
                     }
                 });
             } catch (e) {
@@ -171,4 +174,10 @@ class Projects extends Component {
     }
 }
 
-export default Projects;
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+};
+
+export default connect(mapStateToProps,{})(Projects)

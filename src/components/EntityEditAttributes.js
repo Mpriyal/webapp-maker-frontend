@@ -2,7 +2,7 @@ import React from 'react'
 import AttributeEdit from "./AttributeEdit";
 import {Link} from "react-router-dom";
 import axios from "axios";
-import { URL } from '../utils/contants'
+import {DEV_URL, URL} from '../utils/contants'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -53,7 +53,7 @@ class EnitityEditAttributes extends React.Component {
         };
 
         try {
-            let newField = await axios.post(URL + '/user/1/project/1/entity/' + this.props.entityId+ '/field',defaultField );
+            let newField = await axios.post(DEV_URL + '/user/1/project/1/entity/' + this.props.entityId+ '/field',defaultField );
             if(newField) {
                 this.loadFields()
             }
@@ -108,7 +108,7 @@ class EnitityEditAttributes extends React.Component {
                 </table>
                 <div className='row mt-4'>
                     <div className='col-6'>
-                        <Link to='/entity'>
+                        <Link to={'/project/' + this.props.projectId+'/entity'}>
                             <button
                                 type="button"
                                 className="btn btn-block btn-outline-secondary">
