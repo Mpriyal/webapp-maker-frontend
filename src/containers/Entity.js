@@ -6,8 +6,9 @@ import Navbar from "../components/Navbar";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import connect from "react-redux/es/connect/connect";
 
-export default class Entity extends Component {
+class Entity extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,8 +22,7 @@ export default class Entity extends Component {
 
     rerenderEntities = async ()=> {
         try {
-            let userId = localStorage.getItem('userId');
-            let entities = await axios.get( "http://localhost:4000/api/user/"+userId+"/project/"+this.props.match.params.projectId+"/entity");
+            let entities = await axios.get( "http://localhost:4000/api/user/"+ this.props.user._id+"/project/"+this.props.match.params.projectId+"/entity");
             if(entities) {
                 this.setState({
                     entities : entities.data
@@ -37,7 +37,7 @@ export default class Entity extends Component {
     render() {
         return (
             <div className={'mx-5 my-5 px-5'}>
-                <Navbar/>
+                <Navbar history={this.props.history}/>
                 <h1>Entities</h1>
                 <div className={'row'}>
                     {this.state.entities.map((entity) => (
@@ -52,3 +52,11 @@ export default class Entity extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+};
+
+export default connect(mapStateToProps,{})(Entity)

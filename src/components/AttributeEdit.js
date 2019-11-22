@@ -4,6 +4,7 @@ import {URL} from "../utils/contants";
 import Navbar from "./Navbar";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import connect from "react-redux/es/connect/connect";
 
 class AttributeEdit extends Component {
     constructor(props) {
@@ -35,8 +36,7 @@ class AttributeEdit extends Component {
      */
     loadEntitiesForProject = async () => {
         try {
-            let userId = localStorage.getItem('userId');
-            let entities = await axios.get("http://localhost:4000/api/user/"+userId+"/project/"+ this.props.match.params.projectId+ "/entity");
+            let entities = await axios.get("http://localhost:4000/api/user/"+this.props.user._id+"/project/"+ this.props.match.params.projectId+ "/entity");
             if(entities) {
                 this.setState({DummyEntities : entities.data.filter((v) => v._id !== this.props.match.params.entityId)});
                 this.getFieldForEntity(this.state.DummyEntities[0]._id)
@@ -126,7 +126,7 @@ class AttributeEdit extends Component {
     render() {
         return (
             <div className="container my-5 card p-5">
-                <Navbar/>
+                <Navbar history={this.props.history}/>
                 <h3 className={'my-3'}>{this.state.name}</h3>
                 <label htmlFor="entity">Name</label>
                 <input type="text" className="form-control"
@@ -231,4 +231,10 @@ class AttributeEdit extends Component {
     }
 }
 
-export default AttributeEdit;
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+};
+
+export default connect(mapStateToProps,{})(AttributeEdit)

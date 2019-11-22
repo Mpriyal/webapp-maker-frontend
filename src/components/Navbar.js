@@ -2,6 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import '../App.css'
 import axios from 'axios'
+import { connect } from 'react-redux';
 
 class Navbar extends React.Component {
     constructor(props) {
@@ -24,7 +25,7 @@ class Navbar extends React.Component {
             if(currentUser) {
                 console.log('the current ', currentUser)
                 if(currentUser.data.length > 0) {
-                    this.setState({loggedIn: true, user: currentUser.data[0] });
+                    // this.setState({loggedIn: true, user: currentUser.data[0] });
                 }
             }
         }catch (e) {
@@ -35,8 +36,7 @@ class Navbar extends React.Component {
         try {
             let logoutButton = await axios.post('http://localhost:4000/api/logout',{withCredentials: true});
             if(logoutButton) {
-                localStorage.removeItem('userId');
-                this.setState({loggedIn: false});
+                this.props.onLogout();
                 this.props.history.push('/');
             }
         }catch (e) {
@@ -55,12 +55,12 @@ class Navbar extends React.Component {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav ml-auto">
-                        {this.state.loggedIn && this.state.user.firstName &&
-                        <p className={'mx-4 text-white mt-3'}>{this.state.user.firstName} {this.state.user.lastName}</p>}
-                        {this.state.loggedIn && <button onClick={this.logout} className="btn btn-success my-2 my-sm-0" type="submit">
+                        {this.props.loggedIn && this.props.user.firstName &&
+                        <p className={'mx-4 text-white mt-3'}>{this.props.user.firstName} {this.props.user.lastName}</p>}
+                        {this.props.loggedIn && <button onClick={this.logout} className="btn btn-success my-2 my-sm-0" type="submit">
                             Logout
                         </button>}
-                        {!this.state.loggedIn && <Link className="nav-item nav-link" to="/login">
+                        {!this.props.loggedIn && <Link className="nav-item nav-link" to="/login">
                             <button className="btn btn-success my-2 my-sm-0" type="submit">
                                 Login
                             </button>
@@ -71,5 +71,16 @@ class Navbar extends React.Component {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+        loggedIn: state.loggedIn,
+        user: state.user
+    }
+};
 
-export default Navbar
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogout: () =>  dispatch({type: 'LOGOUT'})
+    }
+};
+export default connect(mapStateToProps,mapDispatchToProps)(Navbar)

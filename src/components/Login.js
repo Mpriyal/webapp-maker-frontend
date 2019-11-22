@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {Input} from '../UI/Input';
 import Navbar from "./Navbar";
 import {loginUser} from "../Services/userService";
+import connect from "react-redux/es/connect/connect";
 
 class Login extends React.Component {
     constructor(props) {
@@ -14,8 +15,7 @@ class Login extends React.Component {
         try {
             const user = await loginUser({email:this.state.email , password:this.state.password });
             if(user) {
-                localStorage.setItem('userId', user.data[0]._id);
-                this.setState({loggedIn: true});
+                this.props.onLogin(user.data[0]);
                 this.props.history.push('/');
             }
         }catch (e) {
@@ -25,7 +25,7 @@ class Login extends React.Component {
     render() {
         return (
             <div className="login pt-5" style={{'height': '100%'}}>
-                <Navbar/>
+                <Navbar history={this.props.history}/>
                 <div className={'container'}>
                     <div className={'card p-5 m-5 shadow-lg'} style={{'maxWidth': '900px'}}>
                         <h1 className={'mx-5 px-5'}>Sign In</h1>
@@ -49,5 +49,16 @@ class Login extends React.Component {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+        loggedIn: state.loggedIn,
+        user: state.user
+    }
+};
 
-export default Login
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogin: (user) =>  dispatch({type: 'LOGIN', user})
+    }
+};
+export default connect(mapStateToProps,mapDispatchToProps)(Login)

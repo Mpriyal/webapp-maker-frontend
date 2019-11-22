@@ -25,7 +25,6 @@ class Register extends Component {
             phoneNo: 12345
         };
         try {
-            console.log('the state', this.state)
             const user = await registerUser(userData);
             if(user) {
                 this.props.history.push('/');
@@ -38,7 +37,7 @@ class Register extends Component {
     render() {
         return (
             <div className="login pt-5 container" style={{'height' : '100%'}}>
-                <Navbar/>
+                <Navbar history={this.props.history}/>
                 <div className={'card p-5 m-5 shadow-lg'} style={{'maxWidth': '900px'}}>
                     <h1 className={'mx-5 px-5'}>Register</h1>
                     <form className={'m-5 p-5'}>

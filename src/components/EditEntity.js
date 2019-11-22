@@ -61,7 +61,7 @@ export default class EditEntity extends Component {
     render() {
         return (
             <div className="container my-5">
-                <Navbar/>
+                <Navbar history={this.props.history}/>
                 <h2 className="my-4 mx-2">Edit Entity</h2>
                 <div className=" mt-5 card">
                     <ul className="nav nav-tabs" id="myTab" role="tablist">

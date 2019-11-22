@@ -5,7 +5,7 @@ class Landing extends Component {
     render() {
         return (
             <div>
-                <Navbar/>
+                <Navbar history={this.props.history}/>
                 Hello there
             </div>
         );
