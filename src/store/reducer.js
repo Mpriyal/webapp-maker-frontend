@@ -1,7 +1,9 @@
-const initialState = { loggedIn: false, user: null}
+let initialState = { user: JSON.parse(localStorage.getItem('user')), loggedIn: localStorage.getItem('user')};
+JSON.parse(localStorage.getItem('user'));
 
-const reducer = (state= initialState, action) => {
+const reducer = (state = initialState, action) => {
     if (action.type === 'LOGIN'){
+        localStorage.setItem('user', JSON.stringify(action.user));
         return {
             ...state,
             loggedIn: true,
@@ -9,10 +11,20 @@ const reducer = (state= initialState, action) => {
         }
     }else{
         if (action.type === 'LOGOUT'){
+            localStorage.clear();
             return {
                 ...state,
                 loggedIn: false,
                 user: null
+            }
+        }
+        else{
+            if (action.type === 'PROFILE'){
+                return {
+                    ...state,
+                    loggedIn: false,
+                    user: null
+                }
             }
         }
     }
