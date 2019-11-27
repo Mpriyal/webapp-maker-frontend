@@ -27,7 +27,12 @@ class Register extends Component {
         try {
             const user = await registerUser(userData);
             if(user) {
-                this.props.history.push('/');
+                if(user.data === "Success"){
+                    this.props.history.push('/');
+                }
+                else{
+                    toast("The Username / Phone Number / email is already taken");
+                }
             }
         }
         catch (e) {
@@ -82,7 +87,13 @@ class Register extends Component {
                                placeholder = 'Re-type Password'
                                type='password'
                                onChange={(e) => this.setState({confirmPassword: e})} />
-                        <button onClick={this.handleRegister} type="button" className="btn btn-primary mt-4">Submit</button>
+                        {this.state.password !== this.state.confirmPassword && <small id="emailHelp" className="form-text text-danger">The passwords do not match.</small>}
+                        <button
+                            disabled={!this.state.password || !this.state.firstName || !this.state.lastName || !this.state.email ||
+                                !this.state.username || !this.state.phoneNo || !this.state.password || this.state.password !== this.state.confirmPassword}
+                            onClick={this.handleRegister}
+                            type="button"
+                            className="btn btn-primary mt-4">Submit</button>
                     </form>
                     <Link className={'mx-5 px-5'} to={'/login'}>Have an account? Login.</Link>
                 </div>

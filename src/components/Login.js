@@ -4,7 +4,8 @@ import {Input} from '../UI/Input';
 import Navbar from "./Navbar";
 import {loginUser} from "../Services/userService";
 import connect from "react-redux/es/connect/connect";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -15,10 +16,16 @@ class Login extends React.Component {
         try {
             const user = await loginUser({email:this.state.email , password:this.state.password });
             if(user) {
-                this.props.onLogin(user.data[0]);
-                this.props.history.push('/');
+                if(user.data.length > 0) {
+                    this.props.onLogin(user.data[0]);
+                    this.props.history.push('/');
+                }
+                else{
+                    toast("The Credentials are not correct");
+                }
             }
         }catch (e) {
+            toast("The login was successful");
             this.props.history.push('/login');
         }
     };
@@ -40,11 +47,14 @@ class Login extends React.Component {
                                    placeholder='Password'
                                    type='password'
                                    onChange={(e) => this.setState({password: e})}/>
-                            <button type="button" onClick={() => this.submitLogin()} className="btn btn-primary mt-4">Submit</button>
+                            <button
+                                disabled={!this.state.email || !this.state.password}
+                                type="button" onClick={() => this.submitLogin()} className="btn btn-primary mt-4">Submit</button>
                         </form>
                         <Link className={'mx-5 px-5'} to={'/register'}>Dont Have an account? Register.</Link>
                     </div>
                 </div>
+                <ToastContainer/>
             </div>
         )
     }
