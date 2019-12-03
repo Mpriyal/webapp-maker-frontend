@@ -26,8 +26,6 @@ class Projects extends Component {
         }
     }
     getProjectsForUser = async(userId) => {
-        console.log(userId)
-
         try{
             getprojectsForUser(userId).then((res) => {
                 let projectsList = [];
@@ -120,13 +118,6 @@ class Projects extends Component {
             <div>
                 <Navbar history={this.props.history} logout={()=> this.getProjectsForUser(this.props.userId)}/>
                 <div className="list-group mx-4" style={{"marginTop":"3rem"}}>
-                    {/*<button type="button"*/}
-                    {/*        className="btn btn-outline-primary my-2"*/}
-                    {/*        onClick={this.addNewProject}*/}
-                    {/*>Add New Project*/}
-                    {/*</button>*/}
-                    the {this.props.userId}
-
                     <div className="input-group mb-3 border border-secondary rounded">
                         <input type="text"
                                className="form-control"
