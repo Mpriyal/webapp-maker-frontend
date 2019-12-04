@@ -15,9 +15,9 @@ class AttributeEdit extends Component {
             label: '',
             enumerations: '',
             dataTypes: ['Text', 'Number', 'Decimal', 'Date',
-                'DateTime', 'Boolean', 'Enumeration', 'Relation'],
+                'DateTime', 'Boolean', 'Enumeration'],
             DummyEntities: [],
-            relationship: ['OneToMany','ManyToOne', 'ManyToMany', 'OneToOne'],
+            relationship: ['','OneToMany','ManyToOne', 'ManyToMany', 'OneToOne'],
             DummyFields: [],
             validations: ['Required', 'Not Required'],
             selectedValidation: 'Required',
@@ -38,11 +38,12 @@ class AttributeEdit extends Component {
         try {
             let entities = await axios.get(DEV_URL + "/user/"+this.props.user._id+"/project/"+ this.props.match.params.projectId+ "/entity");
             if(entities) {
-                this.setState({DummyEntities : entities.data.filter((v) => v._id !== this.props.match.params.entityId)});
+                const filteredEntities = entities.data.filter((v) => v._id !== this.props.match.params.entityId)
+                this.setState({DummyEntities :filteredEntities ,relationEntity: filteredEntities[0]._id });
                 this.getFieldForEntity(this.state.DummyEntities[0]._id)
             }
         } catch (e) {
-            toast("Connection error");
+            toast("Connection error: Cannot load the entities");
         }
     };
     /*
@@ -57,8 +58,8 @@ class AttributeEdit extends Component {
                 validation: this.state.selectedValidation,
                 enumerations: this.state.enumerations !== '' ? this.state.enumerations : null,
                 relation: this.state.relation !== '' ? this.state.relation : null,
-                relationEntity: this.state.relationEntity!== '' ? this.state.relationEntity : null,
-                relationField: this.state.relationField!== '' ? this.state.relationField : null,
+                relationEntity: this.state.relation ? this.state.relationEntity : null,
+                relationField: this.state.relation ? this.state.relationField : null,
 
             });
             if(updatedField) {
@@ -105,7 +106,7 @@ class AttributeEdit extends Component {
         try {
             let fields = await axios.get(DEV_URL + '/user/1/project/1/entity/' + id+ '/field/' );
             if(fields) {
-                this.setState({DummyFields: fields.data});
+                this.setState({DummyFields: fields.data, relationField: fields.data[0]._id});
             }
         } catch (e) {
             toast("Connection error");
@@ -116,6 +117,7 @@ class AttributeEdit extends Component {
         this.setState({selectedValidation: e.target.value})
     };
     handleChangeType = (e) => {
+        this.loadEntitiesForProject();
         this.setState({relation: e.target.value})
     };
     handleChangeField = (e) => {
@@ -158,8 +160,8 @@ class AttributeEdit extends Component {
                         )}
                     </select>
                 </div>
-                {(this.state.type === 'Relation')
-                && <div>
+                {
+                 <div>
                     <label htmlFor="type" className={'mt-3'}>Relation Type</label>
                     <div className="dropdown">
                         <select className="custom-select"
@@ -172,7 +174,7 @@ class AttributeEdit extends Component {
                         </select>
                     </div>
                 </div>}
-                {(this.state.type === 'Relation')
+                {(this.state.relation)
                 && <div>
                     <label htmlFor="type" className={'mt-3'}>Relation Entity</label>
                     <div className="dropdown">
@@ -186,7 +188,7 @@ class AttributeEdit extends Component {
                         </select>
                     </div>
                 </div>}
-                {(this.state.type === 'Relation')
+                {(this.state.relation)
                 && <div>
                     <label htmlFor="type" className={'mt-3'}>Relation Field</label>
                     <div className="dropdown">

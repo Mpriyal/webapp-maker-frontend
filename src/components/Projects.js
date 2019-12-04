@@ -70,7 +70,7 @@ class Projects extends Component {
 
     deleteProject = async(projectId) => {
         try {
-            deleteProject(this.state.userId,projectId).then((res) => {
+            deleteProject(this.props.user._id,projectId).then((res) => {
                 let deletedProject = res.data;
                 if(deletedProject){
                     this.getProjectsForUser(this.props.user._id)
