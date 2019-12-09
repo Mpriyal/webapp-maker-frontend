@@ -6,6 +6,7 @@ const Input = (values) => {
         <input
             onChange={(e) => values.onChange(e.target.value)}
             type={values.type} className="form-control" id={values.id}
+            value={values.value}
             placeholder={values.placeholder} />
         {values.type === 'email' &&
         <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>}

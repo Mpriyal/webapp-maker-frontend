@@ -6,6 +6,7 @@ import Login from './components/Login'
 import Home from "./containers/Home";
 import AttributeEdit from "./components/AttributeEdit";
 import Register from "./components/Register";
+import UserProfile from "./components/UserProfile";
 
 const RouterComponent = () =>{
     return (
@@ -16,6 +17,7 @@ const RouterComponent = () =>{
             <Route exact path='/project/:projectId/entity/:entityId/field/:fieldId/edit' component={AttributeEdit}/>
             <Route path='/login' component={Login}/>
             <Route path='/register' component={Register}/>
+            <Route path='/profile' component={UserProfile}/>
         </Router>
     )
 };

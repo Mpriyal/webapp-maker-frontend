@@ -34,8 +34,10 @@ class Navbar extends React.Component {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav ml-auto">
-                        {this.props.loggedIn && this.props.user.firstName &&
-                        <p className={'mx-4 text-white mt-3'}>{this.props.user.firstName} {this.props.user.lastName}</p>}
+                        <Link to={'/profile'}>
+                            {this.props.loggedIn && this.props.user.firstName &&
+                            <p className={'mx-4 text-white mt-3'}>{this.props.user.firstName} {this.props.user.lastName}</p>}
+                        </Link>
                         {this.props.loggedIn && <button onClick={this.logout} className="btn btn-success my-2 my-sm-0" type="submit">
                             Logout
                         </button>}
