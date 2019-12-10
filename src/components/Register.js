@@ -22,7 +22,8 @@ class Register extends Component {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,
-            phoneNo: this.state.phoneNo
+            phoneNo: this.state.phoneNo,
+            role: 'customer'
         };
         try {
             const user = await registerUser(userData);

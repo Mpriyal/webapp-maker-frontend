@@ -7,6 +7,7 @@ import Home from "./containers/Home";
 import AttributeEdit from "./components/AttributeEdit";
 import Register from "./components/Register";
 import UserProfile from "./components/UserProfile";
+import Admin from "./components/Admin";
 
 const RouterComponent = () =>{
     return (
@@ -18,6 +19,7 @@ const RouterComponent = () =>{
             <Route path='/login' component={Login}/>
             <Route path='/register' component={Register}/>
             <Route path='/profile' component={UserProfile}/>
+            <Route path='/admin' component={Admin}/>
         </Router>
     )
 };

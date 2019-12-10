@@ -18,7 +18,13 @@ class Login extends React.Component {
             if(user) {
                 if(user.data.length > 0) {
                     this.props.onLogin(user.data[0]);
-                    this.props.history.push('/');
+                    console.log(user.data[0]);
+                    if (user.data[0].role === 'admin' || user.data[0].username === 'admin') {
+                        this.props.history.push('/admin');
+                    }
+                    else {
+                        this.props.history.push('/');
+                    }
                 }
                 else{
                     toast("The Credentials are not correct");
